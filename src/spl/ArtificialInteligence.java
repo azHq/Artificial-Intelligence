@@ -1196,7 +1196,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						if(arr[i][2]==2) {
 						
 							
-						//for(int j=0;j<8;j++) {
+						for(int j=0;j<8;j++) {
 							
 							int[][] Altarr=new int[37][3];
 							
@@ -1215,12 +1215,12 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 							
 							tempX1=i;
 							
-							/*temp=path[i][j];
+							temp=path[i][j];
 							tempX2=temp;
 							
 							
 							if(temp!=-1&&path[temp][j]!=-1) {
-							if(path[i][j]!=-1&&Altarr[path[i][j]][2]==1&&Altarr[path[temp][j]][2]==0) {*/
+							if(path[i][j]!=-1&&Altarr[path[i][j]][2]==1&&Altarr[path[temp][j]][2]==0) {
 								
 								
 								
@@ -1229,12 +1229,14 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 								
 								 bestway.findBestWay(tempX1,Altarr,path); 
 								 
+								 break;
 								 
-							/*}
+								 
+							}
 							
 							}
 							
-						}*/
+						}
 								 
 								 
 						}
@@ -1247,7 +1249,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						}
 						
 						
-						 System.out.println("counter in AI:");
+						 System.out.println(" eat up counter in AI:");
 						
 								int max=-100,index=0;
 								 for(int t=0;t<37;t++) {
@@ -3403,6 +3405,52 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						
 				}*/
 				
+				else if(bestpawn.checkHotspotPosition(counter2)) {
+					
+					
+					System.out.println("hotspotshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+					
+					drawLine2=true;
+					
+					counter2++;
+					
+					if(counter2<150) {
+						
+						AX=bestpawn.AX;
+						AY=bestpawn.AY;
+						BX=bestpawn.BX;
+						BY=bestpawn.BY;
+					}
+					
+					if(counter2>151) {
+						
+						counter2=0;
+						
+						Atflag=false;
+						ploy1=false;
+						
+						team1Move=true;
+						team2Move=false;
+						mouse=false;
+						
+						drawLine2=false;
+						
+					
+						
+						System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiAZAZ");
+					}
+					
+					
+					otherflag=false;
+			
+			
+			
+		}
+				
+				
+				
+				
+				
 				else if((totalpawn2-totalpawn1)>=2&&aprrehend.toCatch()) {
 					
 					
@@ -3444,6 +3492,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					
 					
 				}
+				
+				
 				
 				
 				else if(mf.makeFool()) {
@@ -3497,47 +3547,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 				
 		
 					
-				else if(bestpawn.checkHotspotPosition(counter2)) {
-					
-					
-							System.out.println("hotspotshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-							
-							drawLine2=true;
-							
-							counter2++;
-							
-							if(counter2<150) {
-								
-								AX=bestpawn.AX;
-								AY=bestpawn.AY;
-								BX=bestpawn.BX;
-								BY=bestpawn.BY;
-							}
-							
-							if(counter2>151) {
-								
-								counter2=0;
-								
-								Atflag=false;
-								ploy1=false;
-								
-								team1Move=true;
-								team2Move=false;
-								mouse=false;
-								
-								drawLine2=false;
-								
-							
-								
-								System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiAZAZ");
-							}
-							
-							
-							otherflag=false;
-					
-					
-					
-				}
+				
 				
 				
 				
@@ -3550,7 +3560,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					
 					boolean flagForNextCheck=true,flagForNextCheck2=true,flagForNextCheck3=true;
 					
-					B:for(int i=0;i<73;i++) {
+					B:for(int i=0;i<74;i++) {
 						
 						
 					
@@ -3651,7 +3661,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 				
 		
 				
-				B:for(int i=0;i<73;i++) {
+				B:for(int i=0;i<74;i++) {
 					
 						
 					
@@ -3754,7 +3764,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 			
 				
 				
-				B:for(int i=0;i<73;i++) {
+				B:for(int i=0;i<74;i++) {
 					
 						
 					
@@ -3855,7 +3865,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 				
 				
 				
-				B:for(int i=0;i<73;i++) {
+				B:for(int i=0;i<74;i++) {
 					
 						
 					

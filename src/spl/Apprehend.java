@@ -24,7 +24,6 @@ public class Apprehend {
 	public boolean toCatch() {
 		
 	
-				BestPawn bestpawn=new BestPawn(arr,path);
 				
 				int s=1,temp=0,tempX1=0,tempX2=0,tempX3=0;
 				
@@ -34,7 +33,7 @@ public class Apprehend {
 					
 					
 					int element=i;
-					if(Altarr[element][2]==1) {
+					if(arr[element][2]==1) {
 					
 						for(int j=0;j<8;j++) {
 						
@@ -52,10 +51,11 @@ public class Apprehend {
 						
 							tempX1=element;
 							
-							previous=tempX1;
 						
 							temp=path[element][j];
 							tempX2=temp;
+							
+							previous=temp;
 						
 						
 							if(temp!=-1&&path[temp][j]!=-1) {
@@ -64,14 +64,20 @@ public class Apprehend {
 								if(path[element][j]!=-1&&Altarr[path[element][j]][2]==0&&Altarr[path[temp][j]][2]==0) {
 									
 									counter=0;
+									System.out.println("Apprehend check 1");
 									if(findMyPawn(tempX3)) {
 										
+										BestPawn bestpawn=new BestPawn(arr,path);
 										if(!bestpawn.checkDangerTomove(source)&&Altarr[previous][2]!=1) {
 											
-											arr[source][2]=0;
-											arr[destination][2]=2;
+											System.out.println("Apprehend check 2");
 											
-											if(!bestpawn.checkDangerPosition(destination)) {
+											Altarr[source][2]=0;
+											Altarr[destination][2]=2;
+											
+											BestPawn bestpawn2=new BestPawn(Altarr,path);
+											
+											if(!bestpawn2.checkDangerPosition(destination)) {
 										
 													return true;
 											}

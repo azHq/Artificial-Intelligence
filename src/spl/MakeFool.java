@@ -71,7 +71,7 @@ public class MakeFool {
 							source=tempX1;
 							destination=tempX2;
 							
-							System.out.println("end foolllllllllllllllllllllllllllll");
+							System.out.println("end  fool with return true  foolllllllllllllllllllllllllllll");
 							
 							return true;
 							
@@ -147,6 +147,8 @@ public class MakeFool {
 					OponentBestWay bestway=new OponentBestWay(tempX1,counter2,bestWay2);
 					
 					 bestway.findBestWay(tempX1,Altarr2,path); 
+					 
+					 break;
 				}
 				
 				}
@@ -159,7 +161,7 @@ public class MakeFool {
 		System.out.println("newwwww team 1 counter in AI:");
 		for(int t=0;t<37;t++) {
 		
-				System.out.println("index:"+t+" value"+counter2[t]);
+				//System.out.println("index:"+t+" value"+counter2[t]);
 		}
 		
 		System.out.println();
@@ -219,7 +221,7 @@ public class MakeFool {
 				for(int i=0;i<37;i++) {
 					
 					
-					if(arr[i][2]==2) {
+					if(Altarr[i][2]==2) {
 					
 					for(int j=0;j<8;j++) {
 						
@@ -264,7 +266,7 @@ public class MakeFool {
 				System.out.println("newwwww team 2 counter in AI:");
 				for(int t=0;t<37;t++) {
 				
-					System.out.println("index:"+t+" value"+counter[t]);
+					//System.out.println("index:"+t+" value"+counter[t]);
 				}
 				System.out.println();
 					
