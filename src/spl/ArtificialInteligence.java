@@ -3568,6 +3568,18 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					
 							int element=queue.poll();
 							if(arr[element][2]==2) {
+								
+								if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
+										||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))) {
+									
+									
+									System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd1111111111111111111111111");
+									queue.add(element);
+									continue;
+								}
+								
+									
+								
 							
 							for(int j=0;j<8;j++) {
 								
@@ -3668,6 +3680,15 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					
 					int element=queue.poll();
 					if(arr[element][2]==2) {
+						
+						if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
+								||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))) {
+							
+							
+							System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd222222222222222222222");
+							queue.add(element);
+							continue;
+						}
 					
 					for(int j=0;j<8;j++) {
 						
@@ -3771,6 +3792,15 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					
 					int element=queue.poll();
 					if(arr[element][2]==2) {
+						
+						if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
+								||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))) {
+							
+							
+							System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd33333333333");
+							queue.add(element);
+							continue;
+						}
 					
 					for(int j=0;j<8;j++) {
 						
