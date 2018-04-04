@@ -31,7 +31,7 @@ public class SafePosition {
 		
 		
 			
-		for(int i=0;i<73;i++) {
+		for(int i=0;i<74;i++) {
 				
 				
 				
@@ -109,7 +109,7 @@ public class SafePosition {
 		
 		
 		
-		for(int i=0;i<73;i++) {
+		for(int i=0;i<74;i++) {
 			
 			
 			

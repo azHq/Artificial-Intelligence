@@ -51,27 +51,72 @@ public class BestPawn {
 													}
 													else {
 														
-														flag1=false;
-														if(counter2<150) {
+														
+														//new add
+														
+														int[][] Altarr=new int[37][3];
+														
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
 															
-															AX=arr[path[i][j]][0];
-															AY=arr[path[i][j]][1];
-															BX=arr[path[temp][t]][0];
-															BY=arr[path[temp][t]][1];
-															
-															System.out.println("azaz 1");
-															
-														}
-														if(counter2>150) {
-															arr[path[i][j]][2]=2;
-															arr[path[temp][t]][2]=0;
-															
-															System.out.println("azaz 2");
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
 															
 														}
 														
-														return true;
+														MakeFool mf=new MakeFool(Altarr,path);
 														
+														int num1=mf.maxForTeam1(Altarr);
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
+															
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
+															
+														}
+														
+														Altarr[path[i][j]][2]=2;
+														Altarr[path[temp][t]][2]=0;
+														
+														int num2=mf.maxForTeam1(Altarr);
+														
+														if(num2<num1) {
+														
+														
+														
+														
+														
+																flag1=false;
+																if(counter2<150) {
+																	
+																	AX=arr[path[i][j]][0];
+																	AY=arr[path[i][j]][1];
+																	BX=arr[path[temp][t]][0];
+																	BY=arr[path[temp][t]][1];
+																	
+																	System.out.println("azaz 1");
+																	
+																}
+																if(counter2>150) {
+																	arr[path[i][j]][2]=2;
+																	arr[path[temp][t]][2]=0;
+																	
+																	System.out.println("azaz 2");
+																	
+																}
+																
+																return true;
+														}
 													}
 													
 												}
@@ -92,26 +137,69 @@ public class BestPawn {
 												if(!checkDangerPosition(path[i][t],t)) {
 													
 													
+													//new add
 													
-													if(counter2<150) {
+													int[][] Altarr=new int[37][3];
+													
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
 														
-														AX=arr[i][0];
-														AY=arr[i][1];
-														BX=arr[path[i][t]][0];
-														BY=arr[path[i][t]][1];
-														
-														System.out.println("azaz 3");
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
 														
 													}
-													if(counter2>150) {
-														arr[i][2]=0;
-														arr[path[i][t]][2]=2;
+													
+													MakeFool mf=new MakeFool(Altarr,path);
+													
+													int num1=mf.maxForTeam1(Altarr);
+													
+													for(int m=0;m<Altarr.length;m++) {
 														
-														System.out.println("azaz 4");
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
+														
 													}
+
 													
-													return true;
+													Altarr[i][2]=0;
+													Altarr[path[i][t]][2]=2;
 													
+													int num2=mf.maxForTeam1(Altarr);
+													
+													if(num2<num1) {
+													
+
+													
+													
+														if(counter2<150) {
+															
+															AX=arr[i][0];
+															AY=arr[i][1];
+															BX=arr[path[i][t]][0];
+															BY=arr[path[i][t]][1];
+															
+															System.out.println("azaz 3");
+															
+														}
+														if(counter2>150) {
+															arr[i][2]=0;
+															arr[path[i][t]][2]=2;
+															
+															System.out.println("azaz 4");
+														}
+														
+														return true;
+													}
+														
 												}
 											}
 											}
@@ -147,27 +235,70 @@ public class BestPawn {
 													else {
 														
 														
-														if(counter2<150) {
+														//new add
+														
+														int[][] Altarr=new int[37][3];
+														
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
 															
-															AX=arr[path[i][j+4]][0];
-															AY=arr[path[i][j+4]][1];
-															BX=arr[path[temp][t]][0];
-															BY=arr[path[temp][t]][1];
-															
-															System.out.println("azaz 5");
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
 															
 														}
-														if(counter2>150) {
-															arr[path[i][j+4]][2]=2;
-															arr[path[temp][t]][2]=0;
+														
+														MakeFool mf=new MakeFool(Altarr,path);
+														
+														int num1=mf.maxForTeam1(Altarr);
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
 															
-															System.out.println("azaz 6");
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
+															
 														}
 														
-														flag1=false;
+														Altarr[path[i][j+4]][2]=2;
+														Altarr[path[temp][t]][2]=0;														
+														int num2=mf.maxForTeam1(Altarr);
 														
+														if(num2<num1) {
+
 														
-														return true;
+												
+														
+																if(counter2<150) {
+																	
+																	AX=arr[path[i][j+4]][0];
+																	AY=arr[path[i][j+4]][1];
+																	BX=arr[path[temp][t]][0];
+																	BY=arr[path[temp][t]][1];
+																	
+																	System.out.println("azaz 5");
+																	
+																}
+																if(counter2>150) {
+																	arr[path[i][j+4]][2]=2;
+																	arr[path[temp][t]][2]=0;
+																	
+																	System.out.println("azaz 6");
+																}
+																
+																flag1=false;
+																
+																
+																return true;
+														}
 														
 													}
 													
@@ -189,28 +320,74 @@ public class BestPawn {
 											if(arr[path[i][t]][2]==0) {
 												if(!checkDangerPosition(path[i][t],t)) {
 													
-													if(counter2<150) {
+													//new add
+													
+													int[][] Altarr=new int[37][3];
+													
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
 														
-														AX=arr[i][0];
-														AY=arr[i][1];
-														BX=arr[path[i][t]][0];
-														BY=arr[path[i][t]][1];
-														
-														System.out.println("azaz 7");
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
 														
 													}
-													if(counter2>150) {
-														arr[i][2]=0;
-														arr[path[i][t]][2]=2;
+													
+													MakeFool mf=new MakeFool(Altarr,path);
+													
+													int num1=mf.maxForTeam1(Altarr);
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
 														
-														System.out.println("azaz 8");
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
+														
 													}
 													
+													Altarr[i][2]=0;
+													Altarr[path[i][t]][2]=2;													
+													int num2=mf.maxForTeam1(Altarr);
+													
+													if(num2<num1) {
+
+
 													
 													
 													
-													return true;
 													
+													
+														if(counter2<150) {
+															
+															AX=arr[i][0];
+															AY=arr[i][1];
+															BX=arr[path[i][t]][0];
+															BY=arr[path[i][t]][1];
+															
+															System.out.println("azaz 7");
+															
+														}
+														if(counter2>150) {
+															arr[i][2]=0;
+															arr[path[i][t]][2]=2;
+															
+															System.out.println("azaz 8");
+														}
+														
+														
+														
+														
+														return true;
+														
+													}
 												}
 											}
 											}
@@ -268,25 +445,71 @@ public class BestPawn {
 													}
 													else {
 														
-														flag1=false;
 														
 														
 														
-														if(counter2<150) {
+														
+														//new add
+														
+														int[][] Altarr=new int[37][3];
+														
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
 															
-															AX=arr[path[i][j]][0];
-															AY=arr[path[i][j]][1];
-															BX=arr[path[temp][t]][0];
-															BY=arr[path[temp][t]][1];
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
 															
 														}
-														if(counter2>150) {
-															arr[path[i][j]][2]=0;
-															arr[path[temp][t]][2]=2;
+														
+														MakeFool mf=new MakeFool(Altarr,path);
+														
+														int num1=mf.maxForTeam1(Altarr);
+														
+														for(int m=0;m<Altarr.length;m++) {
+															
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
+															
 														}
 														
+														Altarr[path[i][j]][2]=0;
+														Altarr[path[temp][t]][2]=2;
+											
+														int num2=mf.maxForTeam1(Altarr);
 														
-														return true;
+														if(num2<num1) {
+
+
+														
+																flag1=false;
+																
+																
+																
+																if(counter2<150) {
+																	
+																	AX=arr[path[i][j]][0];
+																	AY=arr[path[i][j]][1];
+																	BX=arr[path[temp][t]][0];
+																	BY=arr[path[temp][t]][1];
+																	
+																}
+																if(counter2>150) {
+																	arr[path[i][j]][2]=0;
+																	arr[path[temp][t]][2]=2;
+																}
+																
+																
+																return true;
+														}
 														
 													}
 													
@@ -308,22 +531,66 @@ public class BestPawn {
 												if(!checkDangerPosition(path[i][t],t)) {
 													
 													
-													if(counter2<150) {
+													
+													//new add
+													
+													int[][] Altarr=new int[37][3];
+													
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
 														
-														AX=arr[i][0];
-														AY=arr[i][1];
-														BX=arr[path[i][t]][0];
-														BY=arr[path[i][t]][1];
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
 														
 													}
-													if(counter2>150) {
-														arr[i][2]=0;
-														arr[path[i][t]][2]=2;
+													
+													MakeFool mf=new MakeFool(Altarr,path);
+													
+													int num1=mf.maxForTeam1(Altarr);
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
+														
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
+														
 													}
 													
+													Altarr[i][2]=0;
+													Altarr[path[i][t]][2]=2;
+										
+													int num2=mf.maxForTeam1(Altarr);
 													
+													if(num2<num1) {
+
+
 													
-													return true;
+															if(counter2<150) {
+																
+																AX=arr[i][0];
+																AY=arr[i][1];
+																BX=arr[path[i][t]][0];
+																BY=arr[path[i][t]][1];
+																
+															}
+															if(counter2>150) {
+																arr[i][2]=0;
+																arr[path[i][t]][2]=2;
+															}
+															
+															
+															
+															return true;
+													}
 													
 												}
 											}
@@ -358,24 +625,68 @@ public class BestPawn {
 													}
 													else {
 														
-														flag1=false;
 														
-														if(counter2<150) {
+														
+														//new add
+														
+														int[][] Altarr=new int[37][3];
+														
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
 															
-															AX=arr[path[i][j-4]][0];
-															AY=arr[path[i][j-4]][1];
-															BX=arr[path[temp][t]][0];
-															BY=arr[path[temp][t]][1];
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
 															
 														}
-														if(counter2>150) {
-															arr[path[i][j-4]][2]=0;
-															arr[path[temp][t]][2]=2;
+														
+														MakeFool mf=new MakeFool(Altarr,path);
+														
+														int num1=mf.maxForTeam1(Altarr);
+														
+														
+														for(int m=0;m<Altarr.length;m++) {
+															
+															for(int n=0;n<Altarr[0].length;n++) {
+																
+																Altarr[m][n]=arr[m][n];
+																
+																
+															}
+															
 														}
 														
+														Altarr[path[i][j-4]][2]=0;
+														Altarr[path[temp][t]][2]=2;											
+														int num2=mf.maxForTeam1(Altarr);
 														
+														if(num2<num1) {
+
+
 														
-														return true;
+																flag1=false;
+																
+																if(counter2<150) {
+																	
+																	AX=arr[path[i][j-4]][0];
+																	AY=arr[path[i][j-4]][1];
+																	BX=arr[path[temp][t]][0];
+																	BY=arr[path[temp][t]][1];
+																	
+																}
+																if(counter2>150) {
+																	arr[path[i][j-4]][2]=0;
+																	arr[path[temp][t]][2]=2;
+																}
+																
+																
+																
+																return true;
+														}
 														
 													}
 													
@@ -399,22 +710,69 @@ public class BestPawn {
 													
 													
 													
-													if(counter2<150) {
+													//new add
+													
+													int[][] Altarr=new int[37][3];
+													
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
 														
-														AX=arr[i][0];
-														AY=arr[i][1];
-														BX=arr[path[i][t]][0];
-														BY=arr[path[i][t]][1];
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
 														
 													}
-													if(counter2>150) {
-														arr[i][2]=0;
-														arr[path[i][t]][2]=2;
+													
+													MakeFool mf=new MakeFool(Altarr,path);
+													
+													int num1=mf.maxForTeam1(Altarr);
+													
+													
+													
+													for(int m=0;m<Altarr.length;m++) {
+														
+														for(int n=0;n<Altarr[0].length;n++) {
+															
+															Altarr[m][n]=arr[m][n];
+															
+															
+														}
+														
 													}
 													
 													
+													Altarr[i][2]=0;
+													Altarr[path[i][t]][2]=2;
+									
+													int num2=mf.maxForTeam1(Altarr);
 													
-													return true;
+													if(num2<num1) {
+
+
+
+													
+															if(counter2<150) {
+																
+																AX=arr[i][0];
+																AY=arr[i][1];
+																BX=arr[path[i][t]][0];
+																BY=arr[path[i][t]][1];
+																
+															}
+															if(counter2>150) {
+																arr[i][2]=0;
+																arr[path[i][t]][2]=2;
+															}
+															
+															
+															
+															return true;
+															
+													}
 													
 													
 													

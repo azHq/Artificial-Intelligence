@@ -178,8 +178,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					position[count][0]=posX+80;
 					position[count][1]=posY;
 					
-					if(count>=0&&count<=15) position[count][2]=1;
-					else if(count>=21&&count<=36) position[count][2]=2;
+					if(count>=0&&count<=15) position[count][2]=2;
+					else if(count>=21&&count<=36) position[count][2]=1;
 					else position[count][2]=0;
 					
 					

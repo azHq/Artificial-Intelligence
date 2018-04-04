@@ -192,7 +192,7 @@ public class MakeFool {
 				
 				Altarr[sour][2]=0;
 				Altarr[mid][2]=0;
-				Altarr[dest][2]=2;
+				Altarr[dest][2]=1;
 		 }
 		 
 		
