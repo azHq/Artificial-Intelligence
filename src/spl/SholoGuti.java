@@ -18,6 +18,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,7 +37,7 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 	private int[][] position=new int[37][3];
 	private int x=940,y=485;  //940,485,
 	private Timer timer;
-	private int delay=16;
+	private int delay=6;
 	private int f=1,g,h=1,a;
 	private String team1="azaz",team2="bablu";
 	private int totalpawn1=16,totalpawn2=16;
@@ -69,12 +70,18 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 	
 	public int eachRoomHeight,eachRoomWidth;
 	
-	private int A=80,B=245;
+	private int A=-100,B=-100;
 	
 	boolean click=false;
 	
+	public int minutes,seconds,hours;
+	
+	long time;
+	JFrame frame;
+	
 	public SholoGuti(JFrame frame) {
 		
+		this.frame=frame;
 		
 		
 		MenuBar mn=new MenuBar();
@@ -101,7 +108,7 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				frame.setVisible(false);
-				azaz az=new azaz();
+				azaz az=new azaz(frame);
 				
 			}
 			
@@ -204,6 +211,8 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 		item1.addActionListener(new ActionListener() {
 
+		
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -218,6 +227,30 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 					click=false;
 					
 					playGame=true;
+					
+					
+					
+					
+					JFrame frame1 = new JFrame();
+					frame1.setBounds(600, 200, 500,380);
+					frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame1.setResizable(false);
+					frame1.setVisible(true);
+					
+					
+					Message message = null;
+					try {
+						message = new Message(frame,frame1,team1,totalpawn1,minutes,seconds);
+					} catch (IOException l) {
+						// TODO Auto-generated catch block
+						l.printStackTrace();
+					}
+					
+					frame1.add(message);
+					
+					
+					
+					playGame=false;
 					
 				}
 			
@@ -772,11 +805,26 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 	if(totalpawn1<=0) {
 			
-			g.setColor(Color.YELLOW);
-			g.setFont(new Font("serif",Font.BOLD,45));
-			g.drawString(team2+" Won The Match by",(width/2)-200,(height/2));
-			
-			g.drawString(totalpawn2+" Pawn",(width/2)-100,(height/2)+50);
+		JFrame frame1 = new JFrame();
+		frame1.setBounds(600, 200, 500,380);
+		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame1.setResizable(false);
+		frame1.setVisible(true);
+		
+		
+		Message message = null;
+		try {
+			message = new Message(frame,frame1,team2,totalpawn2,minutes,seconds);
+		} catch (IOException l) {
+			// TODO Auto-generated catch block
+			l.printStackTrace();
+		}
+		
+		frame1.add(message);
+		
+		
+		
+	
 			
 			playGame=false;
 			
@@ -784,11 +832,26 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 		if(totalpawn2<=0) {
 			
-			g.setColor(Color.YELLOW);
-			g.setFont(new Font("serif",Font.BOLD,45));
-			g.drawString(team2+" Won The Match by",(width/2)-200,(height/2));
+			JFrame frame1 = new JFrame();
+			frame1.setBounds(600, 200, 500,380);
+			frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame1.setResizable(false);
+			frame1.setVisible(true);
 			
-			g.drawString(totalpawn1+" Pawn",(width/2)-100,(height/2)+50);
+			
+			Message message = null;
+			try {
+				message = new Message(frame,frame1,team1,totalpawn1,minutes,seconds);
+			} catch (IOException l) {
+				// TODO Auto-generated catch block
+				l.printStackTrace();
+			}
+			
+			frame1.add(message);
+			
+			
+			
+			
 			
 			playGame=false;
 			
@@ -796,6 +859,18 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 		
 		
+		//timer
+		
+		 time+=7;
+		 hours=(int)((time/1000)/3600);
+         minutes=(int)((time/1000)/60);
+         seconds=(int)((time/1000)%60);
+
+        String  timer=String.format("%2d:%2d:%2d\n",hours,minutes,seconds);
+        
+        g.setColor(Color.red);
+        g.setFont(new Font("serif",Font.BOLD,45));
+        g.drawString(timer,1250,70);
 		
 		
 		

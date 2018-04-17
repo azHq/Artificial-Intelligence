@@ -21,6 +21,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -84,8 +85,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 	
 	public int eachRoomHeight,eachRoomWidth;
 	
-	private int A=80,B=245;
-	private int counter1=0,counter2=0;
+	private int A=-100,B=-100;
+	private int counter1=0,counter2=0,counter3=0;
 	
 	
 	
@@ -95,13 +96,19 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 	
 	boolean click=false;
 	
+	public int apprehendSource,apprehendDestination;
+	
+	JFrame mainFrame;
+	
+	int hours,minutes=0,seconds=0;
+	long time=0;
 	
 	
 	
 	public ArtificialInteligence(JFrame frame) {
 		
 		
-		
+		this.mainFrame=frame;
 		
 		
 		MenuBar mn=new MenuBar();
@@ -128,7 +135,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				frame.setVisible(false);
-				azaz az=new azaz();
+				azaz az=new azaz(mainFrame);
 				
 			}
 			
@@ -245,6 +252,25 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					totalpawn2=16;
 					click=false;
 					playGame=true;
+					
+					
+					
+					JFrame frame1 = new JFrame();
+					frame1.setBounds(600, 200, 500,380);
+					frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame1.setResizable(false);
+					frame1.setVisible(true);
+					
+					
+					Message message = null;
+					try {
+						message = new Message(mainFrame,frame1,team2,totalpawn2,minutes,seconds);
+					} catch (IOException l) {
+						// TODO Auto-generated catch block
+						l.printStackTrace();
+					}
+					
+					frame1.add(message);
 					
 					
 				}
@@ -851,23 +877,62 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		
 		if(totalpawn1<=0) {
 			
-			g.setColor(Color.YELLOW);
-			g.setFont(new Font("serif",Font.BOLD,45));
-			g.drawString(team2+" Won The Match by",(width/2)-200,(height/2));
 			
-			g.drawString(totalpawn2+" Pawn",(width/2)-100,(height/2)+50);
+			
+			//mainFrame.setVisible(false);
+			
+			JFrame frame1 = new JFrame();
+			frame1.setBounds(600, 200, 500,380);
+			frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame1.setResizable(false);
+			frame1.setVisible(true);
+			
+			
+			Message message = null;
+			try {
+				message = new Message(mainFrame,frame1,team2,totalpawn2,minutes,seconds);
+			} catch (IOException l) {
+				// TODO Auto-generated catch block
+				l.printStackTrace();
+			}
+			
+			frame1.add(message);
+			
+			
+			
+			
 			
 			playGame=false;
 			
 		}
+		
+		
 		
 		if(totalpawn2<=0) {
 			
-			g.setColor(Color.YELLOW);
-			g.setFont(new Font("serif",Font.BOLD,45));
-			g.drawString(team2+" Won The Match by",(width/2)-200,(height/2));
 			
-			g.drawString(totalpawn1+" Pawn",(width/2)-100,(height/2)+50);
+			
+			
+			//mainFrame.setVisible(false);
+			
+			JFrame frame1 = new JFrame();
+			frame1.setBounds(600, 200, 500,380);
+			frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame1.setResizable(false);
+			frame1.setVisible(true);
+			
+			
+			Message message = null;
+			try {
+				message = new Message(mainFrame,frame1,team1,totalpawn1,minutes,seconds);
+			} catch (IOException l) {
+				// TODO Auto-generated catch block
+				l.printStackTrace();
+			}
+			
+			frame1.add(message);
+			
+			
 			
 			playGame=false;
 			
@@ -875,6 +940,20 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		
 		
 		
+		
+		
+		//timer
+		
+		 time+=7;
+		 hours=(int)((time/1000)/3600);
+         minutes=(int)((time/1000)/60);
+         seconds=(int)((time/1000)%60);
+
+        String  timer=String.format("%2d:%2d:%2d\n",hours,minutes,seconds);
+        
+        g.setColor(Color.red);
+        g.setFont(new Font("serif",Font.BOLD,45));
+        g.drawString(timer,1250,70);
 		
 		
 		
@@ -952,8 +1031,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 								}
 						}*/
 						
-						A=arr[mouseTemp][0];
-						B=arr[mouseTemp][1];
+						//A=arr[mouseTemp][0];
+						//B=arr[mouseTemp][1];
 						mouse=true;
 						System.out.println(mouse);
 						
@@ -1023,8 +1102,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 										Atflag=true;
 										
 										arr[path[mouseTemp][i]][2]=2;
-										A=arr[path[mouseTemp][i]][0];
-										B=arr[path[mouseTemp][i]][1];
+										//A=arr[path[mouseTemp][i]][0];
+										//B=arr[path[mouseTemp][i]][1];
 										
 								
 									}
@@ -1103,8 +1182,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 												totalpawn1--;
 												arr[path[next][i]][2]=2;
 												
-												A=arr[path[next][i]][0];
-												B=arr[path[next][i]][1];
+												//A=arr[path[next][i]][0];
+												//B=arr[path[next][i]][1];
 												
 												Atflag=true;
 										
@@ -1181,6 +1260,10 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 			int[] counter=new int[37];
 			
 			int[] checkCounter=new int[37];
+			
+			
+			
+			
 			
 			for(int t=0;t<37;t++) {
 				
@@ -1266,16 +1349,17 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 								
 								 }
 								
+								 
 								 System.out.println();
 								 
-								 
-								 if(max>0) {
+								 if(max>=0) {
 									 	
+									 
 									 	max=counter[index];
 										 drawLine=true;
 										 if(counter1<=250) {
 											 
-											// System.out.println("best way array size:"+bestWay[index].size());
+											 //System.out.println("best way array size:"+bestWay[index].size());
 											 for(int t=0;t<bestWay[index].size();t+=3) {
 											
 												
@@ -3128,6 +3212,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 			if(ploy2==true) {	
 				
 				
+				System.out.println(counter2+" end sour"+apprehendSource+"dest"+apprehendDestination);
 				
 				
 				
@@ -3405,10 +3490,73 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						
 				}*/
 				
+			
+				
+				
+				
+				
+				
+				else if((totalpawn2-totalpawn1)>=2&&aprrehend.toCatch(counter3)) {
+					
+					
+					drawLine2=true;
+					
+					counter3++;
+					
+					System.out.println(counter2 +"       AI sour"+apprehendSource+"AI dest"+apprehendDestination);
+					
+					if(counter3==1) {
+						
+						AX=arr[aprrehend.source][0];
+						AY=arr[aprrehend.source][1];
+						BX=arr[aprrehend.destination][0];
+						BY=arr[aprrehend.destination][1];
+						
+						apprehendSource=aprrehend.source;
+						apprehendDestination=aprrehend.destination;
+						
+						
+						
+						
+					}
+					
+					if(counter3>150) {
+						
+						
+						
+						System.out.println(" end sour"+apprehendSource+"dest"+apprehendDestination);
+						
+						arr[apprehendSource][2]=0;
+						arr[apprehendDestination][2]=2;
+						
+						
+						
+						counter3=0;
+						
+						Atflag=false;
+						ploy1=false;
+						
+						team1Move=true;
+						team2Move=false;
+						mouse=false;
+						
+						drawLine2=false;
+						
+					
+						
+						System.out.println("ApprehendAZAZ");
+					}
+					
+					
+				}
+				
+				
+				
 				else if(bestpawn.checkHotspotPosition(counter2)) {
 					
 					
 					System.out.println("hotspotshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+					System.out.println(" end sour"+apprehendSource+"dest"+apprehendDestination);
 					
 					drawLine2=true;
 					
@@ -3445,52 +3593,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 			
 			
 			
-		}
-				
-				
-				
-				
-				
-				else if((totalpawn2-totalpawn1)>=2&&aprrehend.toCatch()) {
-					
-					
-					drawLine2=true;
-					
-					counter2++;
-					
-					if(counter2<150) {
-						
-						AX=arr[aprrehend.source][0];
-						AY=arr[aprrehend.source][1];
-						BX=arr[aprrehend.destination][0];
-						BY=arr[aprrehend.destination][1];
-					}
-					
-					if(counter2>151) {
-						
-						
-						arr[aprrehend.source][2]=0;
-						arr[aprrehend.destination][2]=2;
-						
-						
-						
-						counter2=0;
-						
-						Atflag=false;
-						ploy1=false;
-						
-						team1Move=true;
-						team2Move=false;
-						mouse=false;
-						
-						drawLine2=false;
-						
-					
-						
-						System.out.println("ApprehendAZAZ");
-					}
-					
-					
 				}
 				
 				
@@ -3531,7 +3633,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						
 					
 						
-						System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiAZAZ");
+						System.out.println("make fool  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiAZAZ");
 					}
 					
 				}
@@ -3570,7 +3672,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 							if(arr[element][2]==2) {
 								
 								if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
-										||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))) {
+										||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||((element==10||element==30)&&(arr[20][2]==1))||((element==6||element==26)&&(arr[16][2]==1))
+										||(element==8&&(arr[6][2]==1||arr[10][2]==1))||(element==18&&(arr[26][2]==1||arr[30][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
 									
 									
 									System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd1111111111111111111111111");
@@ -3682,7 +3785,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					if(arr[element][2]==2) {
 						
 						if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
-								||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))) {
+								||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||((element==10||element==30)&&(arr[20][2]==1))||((element==6||element==26)&&(arr[16][2]==1))
+								||(element==8&&(arr[6][2]==1||arr[10][2]==1))||(element==18&&(arr[26][2]==1||arr[30][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
 							
 							
 							System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd222222222222222222222");
@@ -3740,6 +3844,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 												team1Move=true;
 												team2Move=false;
 												mouse=false;
+											
 												
 												drawLine2=false;
 											
@@ -3794,7 +3899,8 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 					if(arr[element][2]==2) {
 						
 						if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
-								||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))) {
+								||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||((element==10||element==30)&&(arr[20][2]==1))||((element==6||element==26)&&(arr[16][2]==1))
+								||(element==8&&(arr[6][2]==1||arr[10][2]==1))||(element==18&&(arr[26][2]==1||arr[30][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
 							
 							
 							System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd33333333333");

@@ -165,8 +165,14 @@ public class BestWay {
 					}
 					 
 					
-					
-					 checkCounter[node]=checkCounter[node]-max;
+					if(checkCounter[node]>=4&&max>0) {
+						
+						checkCounter[node]=checkCounter[node]/2;
+						
+						checkCounter[node]=checkCounter[node]-max;
+						
+					}
+					 else  checkCounter[node]=checkCounter[node]-max;
 					
 					
 					

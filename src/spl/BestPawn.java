@@ -71,6 +71,7 @@ public class BestPawn {
 														
 														MakeFool mf=new MakeFool(Altarr,path);
 														
+														
 														int num1=mf.maxForTeam1(Altarr);
 														
 														
@@ -90,6 +91,7 @@ public class BestPawn {
 														
 														int num2=mf.maxForTeam1(Altarr);
 														
+														System.out.println("method  save guti  num1"+num1+"num2"+num2);
 														if(num2<num1) {
 														
 														

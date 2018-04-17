@@ -42,10 +42,12 @@ public class azaz {
 		private JLabel background_1;
 		private JLabel background_2;
 		private JPanel jp_1;
+		
+		public static JFrame frame1;
 	
-		public azaz() {
+		public azaz(JFrame frame1) {
 			
-			
+			this.frame1=frame1;
 			initialize();
 			
 			
@@ -55,8 +57,10 @@ public class azaz {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						azaz window = new azaz();
-						window.frame.setVisible(true);
+						
+						frame1=new JFrame("MD.EZAZUL HAQUE");
+						azaz window = new azaz(frame1);
+						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -77,6 +81,9 @@ public class azaz {
 			frame.setBounds(100, 100, 384, 521);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setResizable(true);
+			
+			//main game board
+			
 			
 			try
 			{
@@ -112,18 +119,18 @@ public class azaz {
 					public void actionPerformed(ActionEvent e) {
 					
 							frame.setVisible(false);
-							JFrame frame=new JFrame("MD.EZAZUL HAQUE");
 							
-							SholoGuti sl=new SholoGuti(frame);
-							frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							
+							SholoGuti sl=new SholoGuti(frame1);
+							frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 							GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 							int width = gd.getDisplayMode().getWidth();
 							int height = gd.getDisplayMode().getHeight();
 							
-							frame.setSize(width,height);
-							frame.getContentPane().add(sl);
-							frame.setResizable(false);
-							frame.setVisible(true);
+							frame1.setSize(width,height);
+							frame1.getContentPane().add(sl);
+							frame1.setResizable(false);
+							frame1.setVisible(true);
 					
 					
 					}
@@ -155,6 +162,7 @@ public class azaz {
 					
 					
 					frame.setVisible(false);
+					frame1.setVisible(false);
 				}
 			});
 			
@@ -165,19 +173,18 @@ public class azaz {
 					
 					
 					frame.setVisible(false);
-					JFrame frame=new JFrame("MD.EZAZUL HAQUE");
 					
-					ArtificialInteligence AI=new ArtificialInteligence(frame);
+					ArtificialInteligence AI=new ArtificialInteligence(frame1);
 					
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 					int width = gd.getDisplayMode().getWidth();
 					int height = gd.getDisplayMode().getHeight();
 					
-					frame.setSize(width,height);
-					frame.getContentPane().add(AI);
-					frame.setResizable(false);
-					frame.setVisible(true);
+					frame1.setSize(width,height);
+					frame1.getContentPane().add(AI);
+					frame1.setResizable(false);
+					frame1.setVisible(true);
 					
 				}
 			});
