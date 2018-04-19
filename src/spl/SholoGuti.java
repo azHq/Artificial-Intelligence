@@ -899,7 +899,7 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 				int y1=e.getY();
 				for(int i=0;i<37;i++) {
 					
-					if((x1>=(arr[i][0]-40)&&x1<=arr[i][0]+40)&&((y1>=(arr[i][1]-40)&&y1<=arr[i][1]+40))&&arr[i][2]==1) {
+					if((x1>=(arr[i][0]-40)&&x1<=arr[i][0]+40)&&((y1>=(arr[i][1]-40)&&y1<=arr[i][1]+40))&&arr[i][2]==1&&team1Move==true) {
 						
 						
 						mouseTemp=i;
@@ -926,7 +926,7 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 						mouse=true;
 					
 					}
-					if((x1>=(arr[i][0]-40)&&x1<=arr[i][0]+40)&&((y1>=(arr[i][1]-40)&&y1<=arr[i][1]+40))&&arr[i][2]==2) {
+					if((x1>=(arr[i][0]-40)&&x1<=arr[i][0]+40)&&((y1>=(arr[i][1]-40)&&y1<=arr[i][1]+40))&&arr[i][2]==2&&team2Move==true) {
 						
 						mouseTemp=i;
 						
@@ -1058,6 +1058,33 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 										mouse=false;
 										
 										
+										
+										int tmp=path[next][i];
+
+
+
+			                            for(int t=0;t<8;t++) {
+
+			                                if(path[tmp][t]!=-1) {
+			                                    int tmp2=path[tmp][t];
+			                                    if(path[tmp2][t]!=-1) {
+			                                        if(arr[path[tmp][t]][2]==2&&arr[tmp][2]==1&&arr[path[tmp2][t]][2]==0) {
+
+			                                            team1Move=true;
+			                                            team2Move=true;
+
+			                                        }
+			                                    }
+			                                }
+
+
+			                            }
+
+
+
+										
+										
+										
 									}
 									
 									
@@ -1082,6 +1109,32 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 											team1Move=true;
 										
 											mouse=false;
+											
+											
+											
+											int tmp=path[next][i];
+
+
+
+				                            for(int t=0;t<8;t++) {
+
+				                                if(path[tmp][t]!=-1) {
+				                                    int tmp2=path[tmp][t];
+				                                    if(path[tmp2][t]!=-1) {
+				                                        if(arr[path[tmp][t]][2]==1&&arr[tmp][2]==2&&arr[path[tmp2][t]][2]==0) {
+
+				                                            team1Move=true;
+				                                            team2Move=true;
+
+				                                        }
+				                                    }
+				                                }
+
+
+				                            }
+
+
+
 											
 
 											
