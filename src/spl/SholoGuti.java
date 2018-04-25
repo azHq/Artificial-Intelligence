@@ -1,6 +1,7 @@
 package spl;
 
 import java.awt.BasicStroke;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,11 +19,17 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -79,9 +86,13 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 	long time;
 	JFrame frame;
 	
+	Sound sound;
+	
 	public SholoGuti(JFrame frame) {
 		
 		this.frame=frame;
+		
+		sound=new Sound();
 		
 		
 		MenuBar mn=new MenuBar();
@@ -116,6 +127,101 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 		
 		
+		item2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				
+				BufferedReader bf;
+				BufferedWriter bw;
+				
+				try {
+					
+					String s;
+					bf =new BufferedReader( new FileReader(new File("score.txt")));
+					if( (s=bf.readLine())!=null) {
+						
+						
+
+				        String[] str=s.split(","); 
+				        int time=Integer.parseInt(str[2]);
+				        System.out.println(time);
+				        int hours=(int)((time/1000)/3600);
+				        int  minutes=(int)((time/1000)/60);
+				        int  seconds=(int)((time/1000)%60);
+				         
+				        
+				        
+						
+				       String  timerCount=String.format("%02d:%02d:%02d\n",hours,minutes,seconds);
+				       String show=str[0]+"            "+str[1]+"             "+timerCount;
+				        
+						JFrame frame1 = new JFrame();
+						frame1.setBounds(600, 200, 500,380);
+						frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						frame1.setResizable(false);
+						frame1.getContentPane().setLayout(null);
+						frame1.getContentPane().setBackground(Color.green);
+						
+						JLabel label1=new JLabel("Highest Score");
+						label1.setBounds(180, 0,400,80);
+						label1.setFont(new Font("serif",Font.BOLD,26));
+						
+						
+						JLabel label=new JLabel(show);
+						label.setBounds(100, 70,400,180);
+						label.setFont(new Font("serif",Font.BOLD,26));
+						
+						JLabel label2=new JLabel("Name         Beads          Time");
+						label2.setBounds(95, 20,400,180);
+						label2.setFont(new Font("serif",Font.BOLD,28));
+						
+						frame1.add(label2);
+						frame1.add(label1);
+						
+						Button but=new Button("OK");
+						but.setForeground(Color.black);
+						but.setFont(new Font("serif",Font.BOLD,18));
+						but.setBackground(Color.red);
+						but.setBounds(300,280,120,40);
+						
+						frame1.getContentPane().add(label);
+						frame1.add(but);
+						
+						frame1.setVisible(true);
+						
+						but.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								
+								
+								
+								frame1.setVisible(false);
+							}
+						});
+						
+						
+					}
+					
+					bf.close();
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+				
+				//azaz az=new azaz(mainFrame);
+				
+			}
+			
+		});
+		
+		
+		
 		UIManager.put("OptionPane.buttonFont", new Font("Arial", Font.PLAIN, 18));
 		UIManager.put("OptionPane.messageFont", new FontUIResource(new Font( "Arial", Font.BOLD, 18)));       
 		UIManager.put("OptionPane.minimumSize",new Dimension(500,300));
@@ -126,13 +232,13 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 		if(team1.length()==0) {
 			
-			team1="Abul";
+			team1="Azaz";
 			
 		}
 		
 		if(team2.length()==0) {
 			
-			team2="Kabul";
+			team2="Bablu";
 		}
 		
 		
@@ -227,30 +333,15 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 					click=false;
 					
 					playGame=true;
+					time=0;
 					
 					
 					
 					
-					JFrame frame1 = new JFrame();
-					frame1.setBounds(600, 200, 500,380);
-					frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame1.setResizable(false);
-					frame1.setVisible(true);
-					
-					
-					Message message = null;
-					try {
-						message = new Message(frame,frame1,team1,totalpawn1,minutes,seconds);
-					} catch (IOException l) {
-						// TODO Auto-generated catch block
-						l.printStackTrace();
-					}
-					
-					frame1.add(message);
 					
 					
 					
-					playGame=false;
+					
 					
 				}
 			
@@ -700,6 +791,8 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		g.setColor(Color.green);
 		g.fillRect(0,0,10,height);
 		
+		((Graphics2D) g).setStroke(new BasicStroke(3));
+		
 		g.setColor(Color.red);
 		for(int i=6;i<=10;i++) {
 			
@@ -804,6 +897,67 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		
 		
 	if(totalpawn1<=0) {
+		
+		
+		
+		BufferedReader bf;
+		BufferedWriter bw;
+		
+		
+		
+		try {
+			
+			bf =new BufferedReader( new FileReader(new File("score.txt")));
+			
+			
+			String str;
+			str=bf.readLine();
+			
+			if( str==null) {
+				
+				
+				System.out.println("nulllllllllllll");
+				
+					bw=new BufferedWriter(new FileWriter(new File("score.txt")));
+					bw.write(team2+","+totalpawn2+","+time);
+					bw.close();
+					
+				
+					
+				
+			}
+			else {
+				
+				
+				String[] s=str.split(",");
+				int x=Integer.parseInt(s[2]);
+				
+				System.out.println(team1+" present "+ time);
+				
+				if(x>time){
+					bw=new BufferedWriter(new FileWriter(new File("score.txt")));
+					bw.write(team2+","+totalpawn2+","+time);
+					bw.close();
+					
+				}
+					
+					
+					
+				
+			}
+			
+			
+			
+			
+			
+			bf.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
 			
 		JFrame frame1 = new JFrame();
 		frame1.setBounds(600, 200, 500,380);
@@ -831,6 +985,71 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 		}
 		
 		if(totalpawn2<=0) {
+			
+			
+			
+			
+			BufferedReader bf;
+			BufferedWriter bw;
+			
+			
+			
+			try {
+				
+				bf =new BufferedReader( new FileReader(new File("score.txt")));
+				
+				
+				String str;
+				str=bf.readLine();
+				
+				if( str==null) {
+					
+					
+					System.out.println("nulllllllllllll");
+					
+						bw=new BufferedWriter(new FileWriter(new File("score.txt")));
+						bw.write(team1+","+totalpawn1+","+time);
+						bw.close();
+						
+					
+						
+					
+				}
+				else {
+					
+					
+					String[] s=str.split(",");
+					int x=Integer.parseInt(s[2]);
+					
+					System.out.println(team1+" present "+ time);
+					
+					if(x>time){
+						bw=new BufferedWriter(new FileWriter(new File("score.txt")));
+						bw.write(team1+","+totalpawn1+","+time);
+						bw.close();
+						
+					}
+						
+						
+						
+					
+				}
+				
+				
+				
+				
+				
+				bf.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			
+			
+			
+			
 			
 			JFrame frame1 = new JFrame();
 			frame1.setBounds(600, 200, 500,380);
@@ -866,7 +1085,7 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
          minutes=(int)((time/1000)/60);
          seconds=(int)((time/1000)%60);
 
-        String  timer=String.format("%2d:%2d:%2d\n",hours,minutes,seconds);
+        String  timer=String.format("%02d:%02d:%02d\n",hours,minutes,seconds);
         
         g.setColor(Color.red);
         g.setFont(new Font("serif",Font.BOLD,45));
@@ -924,6 +1143,10 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 						A=arr[mouseTemp][0];
 						B=arr[mouseTemp][1];
 						mouse=true;
+						
+						sound.makeSound();
+						
+						
 					
 					}
 					if((x1>=(arr[i][0]-40)&&x1<=arr[i][0]+40)&&((y1>=(arr[i][1]-40)&&y1<=arr[i][1]+40))&&arr[i][2]==2&&team2Move==true) {
@@ -949,6 +1172,8 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 						A=arr[mouseTemp][0];
 						B=arr[mouseTemp][1];
 						mouse=true;
+						
+						sound.makeSound();
 						
 						
 					}
@@ -1002,6 +1227,8 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 									
 									mouse=false;
 									
+									sound.makeSound();
+									
 									
 							}
 							
@@ -1026,7 +1253,8 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 									team1Move=true;
 									team2Move=false;
 									mouse=false;
-								
+									
+									sound.makeSound();
 									
 							}
 							
@@ -1079,6 +1307,10 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 
 
 			                            }
+			                            
+			                            
+			                            
+			                            sound.makeSound();
 
 
 
@@ -1132,6 +1364,10 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 
 
 				                            }
+				                            
+				                            
+				                            
+				                            sound.makeSound();
 
 
 
