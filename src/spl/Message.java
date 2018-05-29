@@ -147,7 +147,7 @@ public class Message extends JPanel{
 						
 						
 						frame.setVisible(false);
-						azaz m=new azaz(mainframe);
+						MainClass m=new MainClass(mainframe);
 					}
 				});
 		 	}

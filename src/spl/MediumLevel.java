@@ -47,7 +47,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
 
-public class ArtificialInteligence extends JPanel implements MouseListener,ActionListener {
+public class MediumLevel extends JPanel implements MouseListener,ActionListener {
 	
 	
 	private int[][] arr= new int[37][3];
@@ -67,7 +67,9 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 	private int delay=6;
 	private int f=1,g,h=1,a;
 	private String team1="azaz",team2="bablu";
-	private int totalpawn1=16,totalpawn2=16;
+	public int totalpawn1=16,totalpawn2=16;
+	
+	public int controlDoubleployForSource=-10,controlDoubleployForDestination=-10;
 	
 	
 	public int temp,sourceX,sourceY,destinationX,destinationY,AX,AY,BX,BY;
@@ -94,7 +96,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 	public int eachRoomHeight,eachRoomWidth;
 	
 	private int A=-100,B=-100;
-	private int counter1=0,counter2=0,counter3=0;
+	private int counter1=0,counter2=0,counter3=0,minvalue=0;
 	
 	
 	
@@ -106,8 +108,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 	
 	public int apprehendSource,apprehendDestination;
 	
-	public int controlDoubleployForSource,controlDoubleployForDestination;
-	
 	JFrame mainFrame;
 	
 	int hours,minutes=0,seconds=0;
@@ -118,7 +118,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 	
 	
 	
-	public ArtificialInteligence(JFrame frame) {
+	public MediumLevel(JFrame frame) {
 		
 		
 		this.mainFrame=frame;
@@ -274,7 +274,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		width = gd.getDisplayMode().getWidth();
 		height = gd.getDisplayMode().getHeight();
 		
-		eachRoomHeight=height/6;
+		/*eachRoomHeight=height/6;
 		eachRoomWidth=width/10+30;
 		
 		int posX,posY,count=0;
@@ -305,7 +305,53 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 				
 			}
 			
+		}*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		eachRoomHeight=height/7;
+		eachRoomWidth=width/10;
+		
+		int posX,posY,count=0;
+		
+		for(int i=1;i<=9;i++) {
+			for(int j=1;j<=5;j++) {
+				
+				posX=eachRoomWidth*(i-1);
+				posY=eachRoomHeight*j;
+				
+				if((i==1&&j!=2&&j!=4)||(i==2&&j!=1&&j!=5)||(i==8&&j!=1&&j!=5)||(i==9&&j!=2&&j!=4)||(i>=3&&i<=7)) {
+					
+					position[count][0]=posX;
+					position[count][1]=posY;
+					
+					if(count>=0&&count<=15) position[count][2]=2;
+					else if(count>=21&&count<=36) position[count][2]=1;
+					else position[count][2]=0;
+					
+					
+					
+					//System.out.println("positionX:"+posX+"   positionY:"+posY+"   count:"+count);
+					
+					count++;
+					
+				}
+				
+				
+			}
+			
 		}
+		
+		
+		
+		
+		
 		
 		//left
 		position[0][0]+=50;
@@ -412,17 +458,11 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		path[temp][6]=1;
 		
 		
-
-		
-		
 		//1
 		temp=1;
 		path[temp][2]=0;
 		path[temp][4]=4;
 		path[temp][6]=2;
-		
-		
-		
 		
 		//2
 		temp=2;
@@ -434,8 +474,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		path[temp][1]=0;
 		path[temp][6]=4;
 		path[temp][5]=8;
-		
-		
 		
 		//4
 		temp=4;
@@ -783,7 +821,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 			
 		}
 		
-		for(int i=0;i<37;i++) {
+		for(int i=36;i>=0;i--) {
 			
 			queue.add(i);
 			
@@ -828,7 +866,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		
 		
 		//Graphics2D g=(Graphics2D) g;
-		//((Graphics2D) g).setStroke(new BasicStroke(3));
+		((Graphics2D) g).setStroke(new BasicStroke(1));
 		
 		g.setColor(Color.red);
 		for(int i=6;i<=10;i++) {
@@ -942,13 +980,24 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 		
 		g.setColor(Color.yellow);
 		g.setFont(new Font("serif",Font.BOLD,30));
-		g.drawString(team2,arr[31][0],70);
+		g.drawString(team2,arr[31][0]-150,70);
 		g.setFont(new Font("serif",Font.BOLD,30));
-		g.drawString("TOTAL PAWN",arr[31][0],110);
-		g.drawString(team2,arr[16][0]+30,50);
+		//g.drawString("TOTAL PAWN",arr[31][0],110);
+		//g.drawString(team2,arr[16][0]+30,50);
+		
+		
+		//extra
+		g.drawString("TOTAL PAWN",arr[31][0]-150,110);
+		g.drawString(team2,arr[16][0],50);
+		
+		
 		
 		g.setColor(Color.red);
-		g.drawString(" : "+totalpawn2,arr[31][0]+200,110);
+		
+		//extra
+		//g.drawString(" : "+totalpawn2,arr[31][0]+200,110);
+		
+		g.drawString(" : "+totalpawn2,arr[31][0]+45,110);
 		
 		
 		
@@ -1170,7 +1219,9 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
         
         g.setColor(Color.red);
         g.setFont(new Font("serif",Font.BOLD,45));
-        g.drawString(timerCount,1250,70);
+       // g.drawString(timerCount,1250,70);
+        
+        g.drawString(timerCount,900,70);
 		
 		
 		
@@ -1556,16 +1607,17 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						}
 					}
 					
-						
+					 System.out.println(" check counter:");
 						for(int t=0;t<37;t++) {
 					
 							System.out.print(checkCounter[t]);
 						}
+						 System.out.println();
 						
 						
-						 System.out.println(" eat up  eat up up eat  counter in AI:");
+						 System.out.println(" eat up counter in AI:");
 						
-								int max=-100,index=0;
+								int max=-100,index=0,min=100;
 								 for(int t=0;t<37;t++) {
 								
 									 System.out.print(counter[t]);
@@ -1577,13 +1629,18 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 										 max=checkCounter[t];
 										 index=t;
 									 }
+									 
+									 if(checkCounter[t]<=min) {
+										 
+										 min=checkCounter[t];
+									 }
 								
 								 }
 								
-								 
+								 minvalue=min;
 								 System.out.println();
 								 
-								 if(max>=0&&bestWay[index].size()>0) {
+								 if(max>=0) {
 									 	
 									 
 									 	max=counter[index];
@@ -1592,7 +1649,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 											 
 											 counter1++;
 											 
-											 System.out.println("best way array size:"+bestWay[index].size());
+											 //System.out.println("best way array size:"+bestWay[index].size());
 											 for(int t=0;t<bestWay[index].size();t+=3) {
 											
 												
@@ -1694,1739 +1751,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 								 }
 								 
 								
-								//counter1++;
-								//if(counter1>251) counter1=0;
-						
-						
 								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								/*System.out.println("new new new "+i);
-									
-								Atflag=false;
-								
-								
-								
-								
-								Altarr[tempX1][2]=0;
-								Altarr[tempX2][2]=0;
-								Altarr[path[temp][j]][2]=2;
-								
-								temp=path[temp][j];
-								tempX1=temp;
-								
-								lastPosition=tempX1;
-								tempX1=i;*/
-										
-									
-									/*if(j==0) {
-										
-										
-										System.out.println("j-->0laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2);
-										while(s>0){
-											
-											
-											
-											
-										
-											boolean flag=true;
-											for(int k=0;k<8;k++) {
-											
-												
-												temp=tempX1;
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[tempX1][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-													System.out.println("j-->0 laksksjdjdjjdjfkff tempX2 "+tempX2+ "  tempX3  "+tempX3+" count1:   "+count1);
-														count1++;
-														
-														lastPosition=tempX1;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello--->0:   "+count1);
-												bestWay[0][0]=count1;
-												bestWay[0][1]=lastPosition;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-									
-										
-										
-										
-									}
-									else if(j==1) {
-										
-										
-										System.out.println("j-->1  laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-											boolean flag=true;	
-											for(int k=0;k<8;k++) {
-											
-												temp=tempX1;
-												
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													//System.out.println(temp+"   "+path[temp][k]);
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[tempX1][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-														
-														lastPosition=tempX1;
-														
-													System.out.println("laksksjdjdjjdjfkff tempX1 "+tempX2+ "  tempX2  "+tempX3+"  temp "+temp+" count2: "+count2);
-														count2++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello  --->1:   "+count2);
-												bestWay[1][0]=count2;
-												bestWay[1][1]=lastPosition;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-										
-									}
-									
-									else if(j==2) {
-										
-										System.out.println("j-->2 laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-											boolean flag=true;	
-											for(int k=0;k<8;k++) {
-											
-												temp=tempX1;
-												
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[tempX1][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-													System.out.println("j-->2 laksksjdjdjjdjfkff tempX1 "+tempX2+ "  tempX2  "+tempX3+"  temp "+temp+" count3:  "+count3);
-														count3++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello -->2:   "+count3);
-												bestWay[2][0]=count3;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-		}
-									
-									
-									
-									else if(j==3) {
-										
-										System.out.println("j-->3 laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-											boolean flag=true;	
-											for(int k=0;k<8;k++) {
-											
-												temp=tempX1;
-												
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[tempX1][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-													System.out.println("j-->3 laksksjdjdjjdjfkff tempX1 "+tempX2+ "  tempX2  "+tempX3+"  temp "+temp+" count4:   "+count4);
-														count4++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello -->3   "+count4);
-												bestWay[3][0]=count4;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-		
-										
-									}
-									else if(j==4) {
-										
-										System.out.println("j-->4 laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-											boolean flag=true;	
-											for(int k=0;k<8;k++) {
-											
-												temp=tempX1;
-												
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[temp][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-													System.out.println("laksksjdjdjjdjfkff tempX1 "+tempX2+ "  tempX2  "+tempX3+"  temp "+temp+" count5:  "+count5);
-														count5++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello -->4   "+count5);
-												
-												bestWay[4][0]=count5;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-										
-									}
-									else if(j==5) {
-										
-										
-										System.out.println("j-->5  laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-										
-											boolean flag=true;
-											for(int k=0;k<8;k++) {
-											
-												
-											
-												temp=tempX1;
-												
-												if(path[temp][k]!=-1) {
-													
-													
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														System.out.println(tempX1+"   "+Altarr[tempX2][2]);
-														
-														Altarr[tempX1][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-													System.out.println("laksksjdjdjjdjfkff tempX1 "+tempX2+"    " +Altarr[tempX2][2]+"   "+ k+ "  tempX2  "+tempX3+"  temp "+temp+" count6:   "+count6);
-														count6++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello --->5 "+count6);
-												bestWay[5][0]=count6;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-										
-									}
-									else if(j==6) {
-										
-										
-										System.out.println("j-->6  laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-										
-											boolean flag=true;	
-											for(int k=0;k<8;k++) {
-												
-												temp=tempX1;
-												
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[temp][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-													System.out.println("j-->6  laksksjdjdjjdjfkff tempX1 "+tempX2+ "  tempX2  "+tempX3+"  temp "+temp+" count7:  "+count7);
-														count7++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello -->6  "+count7);
-												bestWay[6][0]=count7;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-										
-									}
-									else if(j==7) {
-										
-										
-										
-										System.out.println("j-->7  laksksjdjdjjdjfkff tempX1 "+tempX1+ "  tempX2  "+tempX2+"  temp "+temp);
-										while(s>0){
-											
-											
-											
-											
-										
-											boolean flag=true;	
-											for(int k=0;k<8;k++) {
-											
-												temp=tempX1;
-											
-												
-												if(path[temp][k]!=-1) {
-													
-													
-													System.out.println(temp+"   "+path[temp][k]);
-													temp=path[temp][k];
-													tempX2=temp;
-													
-												
-												if(path[temp][k]!=-1) {
-													
-													temp=path[temp][k];
-													tempX3=temp;
-													
-												
-												
-												if(tempX2!=-1&&tempX3!=-1) {
-												
-													if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-													
-														Altarr[tempX1][2]=0;
-														Altarr[tempX2][2]=0;
-														Altarr[tempX3][2]=2;
-														
-														temp=tempX3;
-														tempX1=tempX3;
-													System.out.println("j-->7  laksksjdjdjjdjfkff tempX1 "+tempX2+ "  tempX2  "+tempX3+"  temp "+temp+" count8:   "+count8);
-														count8++;
-														
-														flag=false;
-														
-													}
-													
-												}
-		
-												
-												}
-												}
-												
-											}
-											
-											if(flag==true) {
-												
-												
-												System.out.println("hello     hello -->7  "+count8);
-												for(int l=0;l<8;l++) {
-														
-														if(l<4) {
-															
-															if(path[tempX1][l]!=-1&&path[tempX1][l+4]!=-1) {
-																
-																if(Altarr[path[tempX1][l]][2]==1&&Altarr[path[tempX1][l+4]][2]==0||Altarr[path[tempX1][l+4]][2]==1&&Altarr[path[tempX1][l]][2]==0) {
-																	
-																		
-																		
-																	
-																}
-															
-															
-															
-															
-															}
-														
-														
-														
-														
-														}
-													
-													
-												}
-												
-												
-												bestWay[7][0]=count8;
-												
-												break;
-												
-											}
-											
-											
-											
-										}
-										
-										
-									}*/
-									
-							/*	counter1++;
-								if(counter1>251) counter1=0;
-															
-									
-									
-									
-									
-								}
-								
-								
-								
-								
-								
-							}
-							
-							
-							
-						}
-						}
-					}*/
-						
-					
-					
-					
-					//eat up guti
-					
-				/*	int[][] Altarr=new int[37][3];
-					
-					for(int m=0;m<Altarr.length;m++) {
-						
-						for(int n=0;n<Altarr[0].length;n++) {
-							
-							Altarr[m][n]=arr[m][n];
-							
-							
-						}
-						
-					}
-					
-					
-					
-					
-						for(int i=0;i<37;i++) {
-							
-							
-							if(arr[i][2]==2) {
-							
-							for(int j=0;j<8;j++) {
-								
-								int s=1,temp=0,tempX1=0,tempX2=0,tempX3;
-								
-								tempX1=i;
-								
-								temp=path[i][j];
-								tempX2=temp;
-								
-								
-								
-								
-								
-								
-								
-								if(temp!=-1&&path[temp][j]!=-1) {
-								if(path[i][j]!=-1&&Altarr[path[i][j]][2]==1&&Altarr[path[temp][j]][2]==0) {
-									
-									Altarr[tempX1][2]=0;
-									Altarr[tempX2][2]=0;
-									Altarr[path[temp][j]][2]=2;
-									
-										
-									
-									
-									ArrayList<Integer> multiLineXY=new  ArrayList<Integer>();
-									
-									if(counter1==0) {
-										
-										
-										
-										
-										multiLineXY.add(arr[tempX1][0]);
-										multiLineXY.add(arr[tempX1][1]);
-										
-										
-										multiLineXY.add(arr[path[temp][j]][0]);
-										multiLineXY.add(arr[path[temp][j]][1]);
-										
-										
-										multiLineDraw.add(multiLineXY);
-										
-										
-										
-									}
-									
-									drawLine=true;
-									
-									repaint();
-									
-									
-									
-									
-									ploy1=false;
-									
-								
-									
-									
-									if(counter1>250) {
-											
-								
-											arr[tempX1][2]=0;
-											arr[tempX2][2]=0;
-											arr[path[temp][j]][2]=2;
-											
-											
-		
-											
-											team1Move=true;
-											team2Move=false;
-											mouse=false;
-											
-											
-											
-											Atflag=false;
-											drawLine=false;
-											
-											multiLineXY.removeAll(multiLineXY);
-											multiLineDraw.removeAll(multiLineDraw);
-											
-											
-											
-										
-									}	
-								
-									
-									temp=path[temp][j];
-									tempX1=temp;
-										
-										if(j==0) {
-											
-											
-											
-											while(s>0){
-												
-												
-												
-												
-												
-											
-												boolean flag=true;
-												for(int k=0;k<8;k++) {
-												
-													
-													temp=tempX1;
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-																
-																
-																
-																
-																
-																
-																
-															}
-															
-															
-															
-															
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															
-															
-															
-															temp=tempX3;
-															tempX1=tempX3;
-													
-															
-															
-															
-															
-															flag=false;
-															
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-										
-											
-											
-											
-										}
-										else if(j==1) {
-											
-											
-											
-											while(s>0){
-												
-												
-												
-												
-												boolean flag=true;	
-												for(int k=0;k<8;k++) {
-												
-													temp=tempX1;
-													
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															
-															temp=tempX3;
-															tempX1=tempX3;
-														
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-											
-										}
-										
-										else if(j==2) {
-											
-											
-											while(s>0){
-												
-												
-												
-												
-												boolean flag=true;	
-												for(int k=0;k<8;k++) {
-												
-													temp=tempX1;
-													
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-															
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															
-															temp=tempX3;
-															tempX1=tempX3;
-														
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-			}
-										
-										
-										
-										else if(j==3) {
-											
-											
-											while(s>0){
-												
-												
-												
-												
-												boolean flag=true;	
-												for(int k=0;k<8;k++) {
-												
-													temp=tempX1;
-													
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-															
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															
-															temp=tempX3;
-															tempX1=tempX3;
-														
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-		
-											
-										}
-										else if(j==4) {
-											
-											
-											while(s>0){
-												
-												
-												
-												
-												boolean flag=true;	
-												for(int k=0;k<8;k++) {
-												
-													temp=tempX1;
-													
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-													
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															
-															
-															temp=tempX3;
-														
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-											
-										}
-										else if(j==5) {
-											
-											
-											
-											while(s>0){
-												
-												
-												
-												
-											
-												boolean flag=true;
-												for(int k=0;k<8;k++) {
-												
-													
-												
-													temp=tempX1;
-													
-													if(path[temp][k]!=-1) {
-														
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-															
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															temp=tempX3;
-															tempX1=tempX3;
-														
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-												
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-											
-										}
-										else if(j==6) {
-											
-											
-											
-											while(s>0){
-												
-												
-												
-												
-											
-												boolean flag=true;	
-												for(int k=0;k<8;k++) {
-													
-													temp=tempX1;
-													
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-														
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-														
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															
-															temp=tempX3;
-															tempX1=tempX3;
-													
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-											
-										}
-										else if(j==7) {
-											
-											
-											
-											
-											while(s>0){
-												
-												
-												
-												
-											
-												boolean flag=true;	
-												for(int k=0;k<8;k++) {
-												
-													temp=tempX1;
-												
-													
-													if(path[temp][k]!=-1) {
-														
-														
-														
-														temp=path[temp][k];
-														tempX2=temp;
-														
-													
-													if(path[temp][k]!=-1) {
-														
-														temp=path[temp][k];
-														tempX3=temp;
-														
-													
-													
-													if(tempX2!=-1&&tempX3!=-1) {
-													
-														if(Altarr[tempX2][2]==1&&Altarr[tempX3][2]==0) {
-														
-															
-															Altarr[tempX1][2]=0;
-															Altarr[tempX2][2]=0;
-															Altarr[tempX3][2]=2;
-															
-															
-															ArrayList<Integer> multiLineXY1=new  ArrayList<Integer>();
-															
-															if(counter1==0) {
-																
-																multiLineXY1.add(arr[tempX1][0]);
-																multiLineXY1.add(arr[tempX1][1]);
-																
-																
-																multiLineXY1.add(arr[tempX3][0]);
-																multiLineXY1.add(arr[tempX3][1]);
-																
-																multiLineDraw.add(multiLineXY1);
-															
-															}
-															
-														
-															
-															repaint();
-															
-															if(counter1>250) {
-																
-																arr[tempX1][2]=0;
-																arr[tempX2][2]=0;
-																arr[tempX3][2]=2;
-																
-																
-																team1Move=true;
-																team2Move=false;
-																mouse=false;
-																
-																
-																
-																Atflag=false;
-																drawLine=false;
-																
-																multiLineXY1.removeAll(multiLineXY1);
-																multiLineDraw.removeAll(multiLineDraw);
-																
-																
-															}
-															temp=tempX3;
-															tempX1=tempX3;
-														
-															
-															
-															flag=false;
-															
-														}
-														
-													}
-		
-													
-													}
-													}
-													
-												}
-												
-												if(flag==true) {
-													
-													
-													
-													
-													
-													break;
-													
-												}
-												
-												
-												
-											}
-											
-										}
-										
-										
-										counter1++;
-										if(counter1>251) counter1=0;
-										
-										
-										
-										
-																	
-										
-										
-										
-										
-									}
-									
-									
-									
-									
-									
-								}
-								
-								
-								
-							}
-							}
-						}*/
-						
-						
 						
 						
 			}		
@@ -3439,20 +1764,13 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 				
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
+		
 				
 				
 			if(ploy2==true) {	
 				
 				
-				System.out.println(counter2+" end sour"+apprehendSource+"dest"+apprehendDestination);
+				
 				
 				
 				
@@ -3463,15 +1781,60 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 				//making object
 				BestPawn bestpawn=new BestPawn(arr,path);
 				
+				DonotBeFool dbf=new DonotBeFool(totalpawn1,totalpawn2);
+				
 				MakeFool mf=new MakeFool(arr,path);
 				
 				Apprehend aprrehend=new Apprehend(arr,path);
 				
+				Minimax min=new Minimax(path);
 				
-				//SafePosition safeposition=new SafePosition(arr,path);
+				
+				System.out.println("maxvalue: "+minvalue);
+				
+				if(minvalue>=0&&dbf.beClever(counter2,arr,path)) {
+					
+					counter2++;
+					
+					drawLine2=true;
+					if(counter2==1) {
+						
+						AX=dbf.AX;
+						AY=dbf.AY;
+						BX=dbf.BX;
+						BY=dbf.BY;
+					}
+					
+					if(counter2>=151) {
+						
+						counter2=0;
+						
+						Atflag=false;
+						ploy1=false;
+						
+						team1Move=true;
+						team2Move=false;
+						mouse=false;
+						
+						drawLine2=false;
+						
+						totalpawn1--;
+						
+						A=-100;
+						B=-100;
+			
+						
+						System.out.println("dont be fool   save gutiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+					}
+					
+					
+					
+				}
 				
 				
-				if(bestpawn.saveGuti(counter2)) {
+				
+				
+				else if(bestpawn.saveGuti(counter2)) {
 					
 					
 					counter2++;
@@ -3498,9 +1861,11 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						
 						drawLine2=false;
 						
+						 sound.makeSound();
+						
 			
 						
-						System.out.println("helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooAZAZ");
+						System.out.println("Save guti   save gutiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
 					}
 					
 					
@@ -3730,123 +2095,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						
 				}*/
 				
-			
-				
-				
-				
-				
-				
-				else if((totalpawn2-totalpawn1)>=2&&aprrehend.toCatch(counter3,controlDoubleployForSource,controlDoubleployForDestination)) {
-					
-					
-					drawLine2=true;
-					
-					counter3++;
-					
-					System.out.println(counter2 +"       AI sour"+apprehendSource+"AI dest"+apprehendDestination);
-					
-					if(counter3==1) {
-						
-						AX=arr[aprrehend.source][0];
-						AY=arr[aprrehend.source][1];
-						BX=arr[aprrehend.destination][0];
-						BY=arr[aprrehend.destination][1];
-						
-						apprehendSource=aprrehend.source;
-						apprehendDestination=aprrehend.destination;
-						
-						
-						
-						
-					}
-					
-					if(counter3>150) {
-						
-						
-						
-						System.out.println(" end sour"+apprehendSource+"dest"+apprehendDestination);
-						
-						arr[apprehendSource][2]=0;
-						arr[apprehendDestination][2]=2;
-						
-						controlDoubleployForSource=apprehendSource;
-						controlDoubleployForDestination=apprehendDestination;
-						
-						
-						
-						
-						counter3=0;
-						
-						Atflag=false;
-						ploy1=false;
-						
-						team1Move=true;
-						team2Move=false;
-						mouse=false;
-						
-						drawLine2=false;
-						
-					
-						
-						System.out.println("ApprehendAZAZ");
-						
-						  sound.makeSound();
-						
-					}
-					
-					
-				}
-				
-				
-				
-				else if(bestpawn.checkHotspotPosition(counter2)) {
-					
-					
-					System.out.println("hotspotshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-					System.out.println(" end sour"+apprehendSource+"dest"+apprehendDestination);
-					
-					drawLine2=true;
-					
-					counter2++;
-					
-					if(counter2<150) {
-						
-						AX=bestpawn.AX;
-						AY=bestpawn.AY;
-						BX=bestpawn.BX;
-						BY=bestpawn.BY;
-					}
-					
-					if(counter2>151) {
-						
-						counter2=0;
-						
-						Atflag=false;
-						ploy1=false;
-						
-						team1Move=true;
-						team2Move=false;
-						mouse=false;
-						
-						drawLine2=false;
-						
-					
-						
-						System.out.println("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiAZAZ");
-						
-						  sound.makeSound();
-						
-					}
-					
-					
-					otherflag=false;
-			
-			
-			
-				}
-				
-				
-				
 				
 				else if(mf.makeFool()) {
 					
@@ -3881,15 +2129,195 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						
 						drawLine2=false;
 						
+						
+						
+						System.out.println("make fool  foooooooooooooooooooooooooooooooooooooooooooooooooolAZAZ");
+						
+						sound.makeSound();
+						
+					}
+					
+				}
+				
+				
+				else if(min.findBestMove(arr,queue,controlDoubleployForSource,controlDoubleployForDestination)>=0) {
+					
+					drawLine2=true;
+					
+					counter2++;
+					
+					//if(counter2<150) {
+						
+						
+						AX=arr[min.source][0];
+						AY=arr[min.source][1];
+						BX=arr[min.destination][0];
+						BY=arr[min.destination][1];
+					//}
+					
+					//if(counter2>151) {
+						
+						
+						arr[min.source][2]=0;
+						arr[min.destination][2]=2;
+						
+						controlDoubleployForSource=min.source;
+						controlDoubleployForDestination=min.destination;
+						
+						
+						
+						
+						counter2=0;
+						
+						Atflag=false;
+						ploy1=false;
+						
+						team1Move=true;
+						team2Move=false;
+						mouse=false;
+						
+						drawLine2=false;
+						
 					
 						
-						System.out.println("make fool  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiAZAZ");
+						System.out.println("most efficient move");
+						
+						  sound.makeSound();
+						
+					
+					//}
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
+				
+				
+				
+				
+				
+				else if((totalpawn2-totalpawn1)>=2&&aprrehend.toCatch(counter3,controlDoubleployForSource,controlDoubleployForDestination)) {
+					
+					
+					drawLine2=true;
+					
+					counter3++;
+					
+					
+					
+					if(counter3==1) {
+						
+						AX=arr[aprrehend.source][0];
+						AY=arr[aprrehend.source][1];
+						BX=arr[aprrehend.destination][0];
+						BY=arr[aprrehend.destination][1];
+						
+						apprehendSource=aprrehend.source;
+						apprehendDestination=aprrehend.destination;
+						
+						
+						
+						
+					}
+					
+					if(counter3>150) {
+						
+						
+						
+						System.out.println(" end sour"+apprehendSource+"dest"+apprehendDestination);
+						
+						arr[apprehendSource][2]=0;
+						arr[apprehendDestination][2]=2;
+						
+						
+						
+						counter3=0;
+						Atflag=false;
+						ploy1=false;
+						
+						team1Move=true;
+						team2Move=false;
+						mouse=false;
+						
+						drawLine2=false;
+						
+					
+						
+						System.out.println("ApprehendAZAZ  Apprehend apppppppppppppppppppppppppppppppppppppppppre");
 						
 						  sound.makeSound();
 						
 					}
 					
+					
 				}
+				
+				
+				
+				else if(bestpawn.checkHotspotPosition(counter2)) {
+					
+					
+					System.out.println("hotspotshhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+					System.out.println(" end sour"+apprehendSource+"dest"+apprehendDestination);
+					
+					drawLine2=true;
+					
+					counter2++;
+					
+					if(counter2<150) {
+						
+						AX=bestpawn.AX;
+						AY=bestpawn.AY;
+						
+						BX=bestpawn.BX;
+						BY=bestpawn.BY;
+					}
+					
+					if(counter2>151) {
+						
+						counter2=0;
+						
+						Atflag=false;
+						ploy1=false;
+						
+						team1Move=true;
+						team2Move=false;
+						mouse=false;
+						
+						drawLine2=false;
+						
+					
+						
+						System.out.println("hots pots point ppppppppppppppppppppppppppppppppppppppppppppppppppppppppAZAZ");
+						
+						  sound.makeSound();
+						
+					}
+					
+					
+					otherflag=false;
+			
+			
+			
+				}
+				
+				
+				
 				
 				
 				
@@ -3933,8 +2361,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 									queue.add(element);
 									continue;
 								}
-								
-								
 								
 									
 								
@@ -3988,9 +2414,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 											
 												arr[tmp1][2]=0;
 												arr[tmp2][2]=2;
-												
-												controlDoubleployForSource=tmp1;
-												controlDoubleployForDestination=tmp2;
 												
 											
 											
@@ -4054,9 +2477,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 							queue.add(element);
 							continue;
 						}
-						
-						
-						
 					
 					for(int j=0;j<8;j++) {
 						
@@ -4169,7 +2589,7 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 								||(element==8&&(arr[6][2]==1||arr[10][2]==1))||(element==18&&(arr[26][2]==1||arr[30][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
 							
 							
-							System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd33333333333");
+							
 							queue.add(element);
 							continue;
 						}
@@ -4292,7 +2712,6 @@ public class ArtificialInteligence extends JPanel implements MouseListener,Actio
 						if(path[element][j]!=-1&&arr[path[element][j]][2]==0) {
 							
 							
-							System.out.println("other"+"88888");
 									
 									counter2++;
 									

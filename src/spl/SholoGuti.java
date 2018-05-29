@@ -119,7 +119,7 @@ public class SholoGuti extends JPanel implements MouseListener,ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				frame.setVisible(false);
-				azaz az=new azaz(frame);
+				MainClass az=new MainClass(frame);
 				
 			}
 			

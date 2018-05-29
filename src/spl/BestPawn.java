@@ -1478,13 +1478,6 @@ public class BestPawn {
 	
 	public boolean checkDangerPosition(int source,int index) {
 		
-		
-		
-		
-		
-		
-		
-		
 			
 			int temp=0,tempX1=0;
 			

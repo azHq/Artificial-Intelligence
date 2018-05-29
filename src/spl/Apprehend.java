@@ -31,7 +31,7 @@ public class Apprehend {
 	}
 	
 	
-	public boolean toCatch(int counter2) {
+	public boolean toCatch(int counter2,int controlDoubleployForSource,int controlDoubleployForDestination) {
 		
 	
 				this.counter2=counter2;
@@ -116,7 +116,7 @@ public class Apprehend {
 								
 								BestPawn bestpawn2=new BestPawn(Altarr,path);
 								
-								if(!bestpawn2.checkDangerPosition(destination)) {
+								if(!bestpawn2.checkDangerPosition(destination)&&(source==controlDoubleployForSource||source==controlDoubleployForDestination)) {
 									
 									System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwww8"+counter2 +"        sour"+source+"dest"+destination);
 							
@@ -151,7 +151,7 @@ public class Apprehend {
 									
 									BestPawn bestpawn2=new BestPawn(Altarr,path);
 									
-									if(!bestpawn2.checkDangerPosition(destination)) {
+									if(!bestpawn2.checkDangerPosition(destination)&&(source==controlDoubleployForSource||source==controlDoubleployForDestination)) {
 										
 										System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwww 6"+counter2 +"        sour"+source+"dest"+destination);
 								
@@ -182,7 +182,7 @@ public class Apprehend {
 									
 									BestPawn bestpawn2=new BestPawn(Altarr,path);
 									
-									if(!bestpawn2.checkDangerPosition(destination)) {
+									if(!bestpawn2.checkDangerPosition(destination)&&(source==controlDoubleployForSource||source==controlDoubleployForDestination)) {
 										
 										System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwww 10"+counter2 +"        sour"+source+"dest"+destination);
 								
@@ -225,7 +225,7 @@ public class Apprehend {
 								
 								BestPawn bestpawn2=new BestPawn(Altarr,path);
 								
-								if(!bestpawn2.checkDangerPosition(destination)) {
+								if(!bestpawn2.checkDangerPosition(destination)&&(source==controlDoubleployForSource||source==controlDoubleployForDestination)) {
 									
 									System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwww 28"+counter2 +"        sour"+source+"dest"+destination);
 							
@@ -259,7 +259,7 @@ public class Apprehend {
 										
 										BestPawn bestpawn2=new BestPawn(Altarr,path);
 										
-										if(!bestpawn2.checkDangerPosition(destination)) {
+										if(!bestpawn2.checkDangerPosition(destination)&&(source==controlDoubleployForSource||source==controlDoubleployForDestination)) {
 											
 											System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwww 26"+counter2 +"        sour"+source+"dest"+destination);
 									
@@ -290,7 +290,7 @@ public class Apprehend {
 										
 										BestPawn bestpawn2=new BestPawn(Altarr,path);
 										
-										if(!bestpawn2.checkDangerPosition(destination)) {
+										if(!bestpawn2.checkDangerPosition(destination)&&(source==controlDoubleployForSource||source==controlDoubleployForDestination)) {
 											
 											System.out.println("newwwwwwwwwwwwwwwwwwwwwwwwwwwwww 30"+counter2 +"        sour"+source+"dest"+destination);
 									
@@ -409,11 +409,14 @@ public class Apprehend {
 											
 											BestPawn bestpawn2=new BestPawn(Altarr,path);
 											
-											if(!bestpawn2.checkDangerPosition(destination)) {
+											if(!bestpawn2.checkDangerPosition(destination)&&(source!=controlDoubleployForSource||source!=controlDoubleployForDestination)) {
+												
 												
 												System.out.println(counter2 +"        sour"+source+"dest"+destination);
 										
 													return true;
+													
+												
 											}
 										}
 										

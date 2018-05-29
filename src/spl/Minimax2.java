@@ -4,7 +4,7 @@ import java.util.Queue;
 
 import javax.swing.plaf.synth.SynthStyle;
 
-public class Minimax {
+public class Minimax2 {
 	
 	public boolean team1,team2;
 	int[][] path=new int[37][8];
@@ -14,18 +14,24 @@ public class Minimax {
 	
 	public int callbySource=0,callbyDestination=0;
 	
+	String team=null;
 	
-	public Minimax(int [][] path) {
+	int initialGuti1=0,initialGuti2=0;
+	
+	
+	public Minimax2(int [][] path) {
 		
 		this.path=path;
 		
 	}
 	
-	public int minimax(int[][] board, int depth, boolean isMax)
+	public int minimax(int[][] board,int alpha,int beta, int depth, boolean isMax)
 	{
 	    
 		
 			//System.out.println("depthdephtttttttttttttttttttttttttttttt: "+depth);
+		
+			System.out.println("Call by "+team);
 			
 			System.out.println("callbySource: "+callbySource+" callbydestination: "+callbyDestination);
 			
@@ -43,7 +49,7 @@ public class Minimax {
 				
 			}
 			
-			for(int i=0;i<37;i++) {
+			/*for(int i=0;i<37;i++) {
 				
 				if(i>=6&&i<=10) System.out.print(" ");
 				if(i==0||i==3||i==31||i==34)System.out.print("            ");
@@ -51,7 +57,7 @@ public class Minimax {
 				if(i==2||i==5||i==10||i==15||i==20||i==25||i==30||i==33||i==36) System.out.println();
 				
 				
-			}
+			}*/
 			
 			
 			System.out.println();
@@ -113,7 +119,7 @@ public class Minimax {
 	    // If this maximizer's move
 	    if (isMax)
 	    {
-	        int best = -1000;
+	        int newBeta=alpha;
 	        
 	        
 	        
@@ -125,13 +131,13 @@ public class Minimax {
 	        for (int i = 0; i<37; i++)
 		    {	
 	        	
-	        	int element=i;
-		    	
+		    	int element=i;
 		    	if(board[i][2]==2) {
 		    		
 		    	
 				    	for(int j=0;j<8;j++) {
 							
+				    		int p=0;
 							int s=1,temp=0,tempX1=0,tempX2=0,tempX3;
 							
 							tempX1=i;
@@ -139,77 +145,106 @@ public class Minimax {
 							temp=path[i][j];
 							tempX2=temp;
 							
-							
-							board[i][2]=0;
-							
-							BestPawn bestpawn=new BestPawn(board,path);
-							
+							 
+							 
+							 BestPawn bestpawn=new BestPawn(board,path);
 							if(temp!=-1) {
 								
 								
 								
-								if(board[temp][2]==0) {
+								if(board[temp][2]==0/*&&!bestpawn.checkDangerPosition(temp)&&!bestpawn.checkDangerTomove(element)*/) {
 									
-								
+										board[i][2]=0;
 									//System.out.println("call fromm team 2"+i);
 						                    board[temp][2] = 2;
+						                   
 						 
 						                    currentSource=i;
 						                    currentDestination=temp;
 						                    direction=j;
 						                    
-						                    best = Math.max( best,minimax(board, depth-1, !isMax) );
+						                    team="AI";
+						                    
+						                    newBeta = Math.max( newBeta,minimax(board,alpha,beta, depth-1, !isMax) );
 						                    
 						                   // System.out.println("best for team 2: "+best+"  depth:"+depth);
 						 
-						                    
+						                    board[i][2]=2;
 						                    board[temp][2] =0;
+						                   
 						                    
 						                    
 								}
 								
-								/*else if(path[temp][j]!=-1&&board[temp][2]==1&&board[path[temp][j]][2]==0) {
+								else if(path[temp][j]!=-1&&board[temp][2]==1&&board[path[temp][j]][2]==0) {
 									
 									
 									
 									int[][] Altarr=new int[37][3];
+									int[][] Altarr2=new int[37][3];
+
+									
 									   for(int k=0;k<Altarr.length;k++) {
 											for(int l=0;l<3;l++) {
 												
 												Altarr[k][l]=board[k][l];
+												Altarr2[k][l]=board[k][l];
 											}
 										
 										}
 									
 									System.out.println("AI eatinggggggggggggggggggggggggggggggggggggggg function"+i);
 									
-									MakeFool mf=new MakeFool(Altarr,path);
-									mf.maxForTeam2(Altarr);
+									
+									int[] counter=new int[37];
+									int[] checkCounter=new int[37];
+									
+									BestWayForMinimax bestway=new BestWayForMinimax(i,counter,checkCounter);
+									
+									bestway.findBestWayForMinimax2(i, Altarr, path);
 									
 									
 									
-									 best = Math.max( best,minimax(Altarr, depth-1, !isMax) );
+									/*MakeFool mf=new MakeFool(Altarr,path);
+									mf.maxForTeam2(Altarr);*/
+									
+									//Altarr[temp][2]=0;
+									//Altarr[path[temp][j]][2]=2;
+									
+									
+									
+									
+									newBeta= Math.max( newBeta,minimax(Altarr,-10000,10000, depth-1, !isMax) );
 									 
-									 Altarr=board;
+									 for(int k=0;k<Altarr.length;k++) {
+											for(int l=0;l<3;l++) {
+												
+												board[k][l]=Altarr2[k][l];
+											}
+										
+										}
 									 
 									 
-									 
-								}*/
+								}
 									
 							}
-							board[i][2]=2;
+							 
 				    	}
+				    	
 						                    
 	                }
 	            }
 	        
-	        return best;
+	        team="AI";
+
+	        
+	        return newBeta;
 	    }
 	 
 	 
 	    else
 	    {
-	    	  int best =-1000;
+	    	  int newAlpha =beta;
 	    		 
 	    	  
 	    	  
@@ -230,39 +265,101 @@ public class Minimax {
 								
 								temp=path[i][j];
 								tempX2=temp;
-								board[i][2]=0;
-								BestPawn bestpawn=new BestPawn(board,path);
 								
+								BestPawn bestpawn=new BestPawn(board,path);
 								if(temp!=-1) {
+									
 									//System.out.println("call fromm team 1"+i);
-									if(board[temp][2]==0) {
+									if(board[temp][2]==0/*&&!bestpawn.checkDangerPosition1(temp)&&!bestpawn.checkDangerTomove1(element)*/) {
 					                    // Make the move
+										
+										board[i][2]=0;
 										board[temp][2] = 1;
 										
-					 
+										
+										
 										currentSource=i;
 					                    currentDestination=temp;
 					                    direction=j;
+					                    
+					                    team="Human";
+
 
 										
-					                    best = Math.max( best, minimax(board, depth-1, !isMax) );
-					                    System.out.println("best for team 1:  "+best);
+					                    newAlpha = Math.min( newAlpha, minimax(board,alpha,beta, depth-1, !isMax) );
+					                    System.out.println("best for team 1:  "+newAlpha);
 					 
 					                  
 					                    board[temp][2]=0;
+					                    board[i][2]=1;
+					                   
 
 									}
 									
-																		
+									else if(path[temp][j]!=-1&&board[temp][2]==2&&board[path[temp][j]][2]==0) {
+										
+										
+										
+										int[][] Altarr=new int[37][3];
+										int[][] Altarr2=new int[37][3];
+										
+										   for(int k=0;k<Altarr.length;k++) {
+												for(int l=0;l<3;l++) {
+													
+													Altarr[k][l]=board[k][l];
+													Altarr2[k][l]=board[k][l];
+
+												}
+											
+											}
+										
+										System.out.println("AI eatinggggggggggggggggggggggggggggggggggggggg function"+i);
+										
+										/*MakeFool mf=new MakeFool(Altarr,path);
+										mf.maxForTeam1(Altarr);*/
+										
+										int[] counter=new int[37];
+										int[] checkCounter=new int[37];
+										
+										BestWayForMinimax bestway=new BestWayForMinimax(i,counter,checkCounter);
+										
+										bestway.findBestWayForMinimax1(i, Altarr, path);
+										
+										
+										//Altarr[temp][2]=0;
+										//Altarr[path[temp][j]][2]=1;
+										
+										
+										
+										 newAlpha = Math.min( newAlpha,minimax(Altarr,-10000,10000,depth-1, !isMax) );
+										 
+										 for(int k=0;k<Altarr.length;k++) {
+												for(int l=0;l<3;l++) {
+													
+													board[k][l]=Altarr2[k][l];
+												}
+											
+											}
+										 
+										 
+									}
+										
 								}
-								board[i][2]=1;
+								
+								
+					    	
+									
+																		
+								
 					    	}
 		                }
 		                
 		        }
 		            
+	    	  team="Human";
+
 		        
-		        return best;
+		        return newAlpha;
 		      
 	    }
 	    
@@ -271,7 +368,7 @@ public class Minimax {
 	
 	int findBestMove(int[][] arr,Queue<Integer> queue,int controlDoubleployForSource,int controlDoubleployForDestination)
 	{
-	    int bestVal = -1000;
+	    int bestVal = -10000000;
 	  
 	   
 	   
@@ -286,26 +383,40 @@ public class Minimax {
 	   
 	   
 	   
+	   int count1=0,count2=0;
+	   for(int i=0;i<board.length;i++) {
+			
+			
+			if(board[i][2]==1) count1++;
+			if(board[i][2]==2) count2++;
+			
+			
+		}
+	   
+	   initialGuti1=count1;
+	   initialGuti2=count2;
+
 	   
 	   boolean firstcheck1=false,firstcheck2=false;
 	   
-	  A:for (int i = 36; i>=0; i--)
+	  A:for (int i =36; i>=0; i--)
 	    {
 	    		
 	    	int element= i;  //queue.poll();
 	    	
-	    	if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
-					||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||((element==10||element==30)&&(arr[20][2]==1))||((element==6||element==26)&&(arr[16][2]==1))
-					||(element==8&&(arr[6][2]==1||arr[10][2]==1))||(element==18&&(arr[26][2]==1||arr[30][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
-				
-				
-				System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd1111111111111111111111111");
-				
-				continue;
-			}
+	    	
 	    	
 	    	
 	    	if(board[element][2]==2) {
+	    		
+	    		if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
+						||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
+					
+					
+					System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd1111111111111111111111111");
+					
+					continue;
+				}
 	    		
 	    		if(element==controlDoubleployForSource||element==controlDoubleployForDestination) {
 	    			
@@ -331,7 +442,7 @@ public class Minimax {
 						BestPawn bestpawn=new BestPawn(board,path);
 						
 						if(temp!=-1) {
-							if(board[temp][2]==0&&!bestpawn.checkDangerPosition(temp)&&!bestpawn.checkDangerTomove(element)) {
+							if(board[temp][2]==0/*&&!bestpawn.checkDangerPosition(temp)&&!bestpawn.checkDangerTomove(element)*/) {
 			            
 								
 								firstcheck1=true;
@@ -348,7 +459,7 @@ public class Minimax {
 			                    
 							System.out.println("callcalllbybbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb by"+element);
 			                
-			                int moveVal = minimax(board, 1, false);
+			                int moveVal = minimax(board, -1000000,1000000,2,false);
 			                
 			             //   System.out.println("return valuevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv:"+moveVal);
 			 
@@ -393,8 +504,7 @@ public class Minimax {
 			    	int element= i;  //queue.poll();
 			    	
 			    	if((element==16&&(arr[12][2]==1||arr[22][2]==1))||(element==20&&(arr[14][2]==1||arr[24][2]==1))||(element==6&&(arr[7][2]==1||arr[11][2]==1||arr[12][2]==1))||(element==26&&(arr[21][2]==1||arr[27][2]==1||arr[22][2]==1))
-							||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||((element==10||element==30)&&(arr[20][2]==1))||((element==6||element==26)&&(arr[16][2]==1))
-							||(element==8&&(arr[6][2]==1||arr[10][2]==1))/*||(element==18&&(arr[26][2]==1||arr[30][2]==1))*/||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
+							||(element==30&&(arr[29][2]==1||arr[25][2]==1||arr[24][2]==1))||(element==10&&(arr[9][2]==1||arr[14][2]==1||arr[15][2]==1))||(element==16&&(arr[10][2]==1||arr[30][2]==1))||(element==20&&(arr[6][2]==1||arr[26][2]==1))) {
 						
 						
 						System.out.println("azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzd1111111111111111111111111");
@@ -446,7 +556,7 @@ public class Minimax {
 					                    
 									System.out.println("callcalllbybbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb by"+element);
 					                
-					                int moveVal = minimax(board, 1, false);
+					                int moveVal = minimax(board,-10000,10000, 1, false);
 					                
 					             //   System.out.println("return valuevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv:"+moveVal);
 					 
@@ -543,7 +653,7 @@ public class Minimax {
 					                    
 									System.out.println("callcalllbybbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb by"+element);
 					                
-					                int moveVal = minimax(board, 1, false);
+					                int moveVal = minimax(board,-10000,10000, 1, false);
 					                
 					             //   System.out.println("return valuevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv:"+moveVal);
 					 
@@ -591,7 +701,7 @@ public class Minimax {
 	    
 	   
 
-	 
+	    System.out.println("return from: "+team);
 	 
 	    return index;
 	}
@@ -603,12 +713,6 @@ public class Minimax {
 		
 		
 		
-		
-		
-		System.out.println("currentSorce"+currentSource+"dest"+currentDestination);
-		
-		int AIscore=0;
-		int humanscore=0;
 		
 		int[][]  Altarr2=new int[37][3];
 		
@@ -627,7 +731,23 @@ public class Minimax {
 			
 		}
 		
-		int count1=0,count2=0,num1=1,num2=1;
+		
+			
+		
+		int num1=0,num2=0;
+		
+		/*MakeFool mk1=new MakeFool(Altarr2,path);
+		
+		num1+=mk1.maxForTeam1(Altarr2);
+		
+		num2+=mk1.maxForTeam2(Altarr2);*/
+						
+		
+			
+
+		
+		
+		int count1=0,count2=0;
 		for(int i=0;i<Altarr2.length;i++) {
 			
 			
@@ -639,50 +759,194 @@ public class Minimax {
 			
 		}
 		
+		count1=initialGuti1-count1;
+		count2=initialGuti2-count2;
+
 		
 		
+		int AIscore=0,AIscore2=0,AIscore3=0,AIscore4=0,AIscore5=0,AIscore6=0,humanscore=0,humanscore2=0,humanscore3=0,humanscore4=0,humanscore5=0;
 		
 		
-		
-		
-		MakeFool mk1=new MakeFool(Altarr2,path);
-		
-		//for(int i=0;i<37;i++) {
-		
-		//if(Altarr2[i][2]==1) {
-		
-		// System.out.println("return from first");
-		num1+=mk1.maxForTeam1(Altarr2);
-		
-		//}
-		//}
-		
-		//MakeFool mk2=new MakeFool(Altarr2,path);
-		
-		//for(int i=0;i<37;i++) {
-			
-			//if(Altarr2[i][2]==2) {
-			
-					
-					//System.out.println("return from first");
-					 num2+=mk1.maxForTeam2(Altarr2);
-						
-			//}
-		//}
-			
-					
 						
 		
-			/*for(int m=0;m<Altarr2.length;m++) {
-						 
-					for(int n=0;n<Altarr2[0].length;n++) {
-							 
-						 Altarr2[m][n]=Altarr[m][n];
-							 
-							 
+		System.out.println("return value: "+(count1*10-count2*20));	
+		
+		for(int i=0;i<37;i++) {
+			
+			int element=i;
+			if(Altarr2[i][2]==2) {
+				
+				if(Altarr2[i][2]==2&&bestpawn.checkDangerPosition(i)) humanscore+=6;
+				
+				if(!bestpawn.checkDangerPosition(i)&&((element==16&&(Altarr2[12][2]==1||Altarr2[22][2]==1))||(element==20&&(Altarr2[14][2]==1||Altarr2[24][2]==1))||(element==6&&(Altarr2[7][2]==1||Altarr2[11][2]==1||Altarr2[12][2]==1))||(element==26&&(Altarr2[21][2]==1||Altarr2[27][2]==1||Altarr2[22][2]==1))
+				||(element==30&&(Altarr2[29][2]==1||Altarr2[25][2]==1||Altarr2[24][2]==1))||(element==10&&(Altarr2[9][2]==1||Altarr2[14][2]==1||Altarr2[15][2]==1))||(element==16&&(Altarr2[10][2]==1||Altarr2[30][2]==1))||(element==20&&(Altarr2[6][2]==1||Altarr2[26][2]==1)))) {
+					
+					AIscore+=10;
+				
+				}
+				
+				
+				if(count1>count2&&(i==6||i==10||i==16||i==20||i==30||i==26)) AIscore+=6;
+				
+			}
+			
+			else if(Altarr2[i][2]==1) {
+				
+				//if(Altarr2[i][2]==1&&bestpawn.checkDangerPosition1(i)) AIscore+=6;
+				
+				
+				if(i==6||i==10||i==16||i==20||i==30||i==26) humanscore+=6;
+			}
+		}
+		
+		
+		
+		if(initialGuti1<8&&(initialGuti2-initialGuti1)>=2) {
+		
+		
+				if((Altarr2[33][2]==2||Altarr2[36][2]==2)&&(Altarr2[31][2]==1||Altarr2[32][2]==1||Altarr2[34][2]==1||Altarr2[35][2]==1)) {
+					
+					AIscore+=20;
+					
+				}
+				if((Altarr2[34][2]==2||Altarr2[31][2]==2)&&(Altarr2[33][2]==1||Altarr2[36][2]==1||Altarr2[32][2]==1||Altarr2[35][2]==1)) {
+					
+					AIscore+=20;
+				}
+				
+				if((Altarr2[0][2]==2||Altarr2[3][2]==2)&&(Altarr2[1][2]==1||Altarr2[2][2]==1||Altarr2[4][2]==1||Altarr2[5][2]==1)) {
+					
+					AIscore+=20;
+				}
+				if((Altarr2[2][2]==2||Altarr2[5][2]==2)&&(Altarr2[3][2]==1||Altarr2[4][2]==1||Altarr2[1][2]==1||Altarr2[0][2]==1)) {
+					
+					AIscore+=20;
+				}
+				
+				
+				
+				
+				if(((Altarr2[34][2]==2||Altarr2[36][2]==2)&&Altarr2[28][2]==2)&&(Altarr2[34][2]==1||Altarr2[36][2]==1)) {
+					
+					AIscore+=30;
+					
+				}
+				
+				
+				
+				if(((Altarr2[0][2]==2||Altarr2[2][2]==2)&&Altarr2[8][2]==2)&&(Altarr2[0][2]==1||Altarr2[2][2]==1)) {
+					
+					AIscore+=30;
+					
+				}
+				
+		
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		for(int i=0;i<37;i++) {	
+			for(int j=0;j<8;j++) {
+			
+			
+			
+				int s=1,temp=0,tempX1=0,tempX2=0,tempX3=-1,lastPosition=-1;
+				
+				int tempX4=-1,tempX5=-1,tempX6=-1;
+				
+				tempX1=i;
+				
+				temp=path[i][j];
+				tempX2=temp;
+				
+				
+				if(temp!=-1) tempX3=path[temp][j];
+				if(tempX3!=-1) tempX4=path[tempX3][j];
+				if(tempX4!=-1) tempX5=path[tempX4][j];
+				if(tempX5!=-1) tempX6=path[tempX5][j];
+	
+				
+				
+				if(temp!=-1&&path[temp][j]!=-1&&initialGuti1<8&&(initialGuti2-initialGuti1)>=2) {
+					if(path[i][j]!=-1&&Altarr2[path[i][j]][2]==0&&Altarr2[path[temp][j]][2]==2&&i!=18) {
+						
+						AIscore+=12;	
+						
+						//System.out.println("1 step Ai"+i);
+						
 					}
-						 
-			}*/
+					
+					else if(tempX4!=-1&&path[i][j]!=-1&&Altarr2[path[i][j]][2]==0&&Altarr2[path[temp][j]][2]==0&&Altarr2[tempX4][2]==2) {
+						
+						AIscore+=9;	
+						
+						//System.out.println("2 step Ai"+i);
+						
+					}
+					
+					else if(tempX4!=-1&&tempX5!=-1&&path[i][j]!=-1&&Altarr2[path[i][j]][2]==0&&Altarr2[path[temp][j]][2]==0&&Altarr2[tempX4][2]==0&&Altarr2[tempX5][2]==2) {
+						
+						AIscore+=6;
+						humanscore+=3;
+						
+						//System.out.println("3 step AI"+i);
+						
+					}
+					
+					else if(tempX4!=-1&&tempX5!=-1&&tempX6!=-1&&path[i][j]!=-1&&Altarr2[path[i][j]][2]==0&&Altarr2[path[temp][j]][2]==0&&Altarr2[tempX4][2]==0&&Altarr2[tempX5][2]==0&&Altarr2[tempX6][2]==2) {
+						
+						AIscore+=3;
+						humanscore+=6;
+						
+						
+						//System.out.println("4 step AI"+i);
+						
+					}
+					
+					
+					
+					int element=i;
+					
+					if((element==16&&(Altarr2[12][2]==1||Altarr2[22][2]==1))||(element==20&&(Altarr2[14][2]==1||Altarr2[24][2]==1))||(element==6&&(Altarr2[7][2]==1||Altarr2[11][2]==1||Altarr2[12][2]==1))||(element==26&&(Altarr2[21][2]==1||Altarr2[27][2]==1||Altarr2[22][2]==1))
+							||(element==30&&(Altarr2[29][2]==1||Altarr2[25][2]==1||Altarr2[24][2]==1))||(element==10&&(Altarr2[9][2]==1||Altarr2[14][2]==1||Altarr2[15][2]==1))||(element==16&&(Altarr2[10][2]==1||Altarr2[30][2]==1))||(element==20&&(Altarr2[6][2]==1||Altarr2[26][2]==1))) {
+						
+						AIscore+=6;
+					
+					}
+					
+					
+				}
+			}
+
+				
+		}
+		
+		
+		System.out.println("AI TOTAL SCORE: 1: "+AIscore+" 2:"+count1*100);	
+		System.out.println("HUMAN TOTAL SCORE: 1: "+humanscore+" 2:"+count2*100);	
+		
+	
+		int total=(AIscore-humanscore)+count1*1000-count2*1000;
+		
+		
+		
+		
+		
+		
+		
+		return total;
+		
+		
+		
+		
+					
+						
+		
 		
 			
 			
@@ -709,7 +973,7 @@ public class Minimax {
 		
 		
 		
-		int AIscore1=0,AIscore2=0,AIscore3=0,AIscore4=0,AIscore5=0,AIscore6=0,humanscore1=0,humanscore2=0,humanscore3=0,humanscore4=0,humanscore5=0;
+		/*int AIscore1=0,AIscore2=0,AIscore3=0,AIscore4=0,AIscore5=0,AIscore6=0,humanscore1=0,humanscore2=0,humanscore3=0,humanscore4=0,humanscore5=0;
 		
 		
 		for(int i=0;i<37;i++) {
@@ -864,7 +1128,7 @@ public class Minimax {
 				
 					
 					
-					if(Altarr2[i][2]==1&&!bestpawn.checkDangerPosition(i)) humanscore5++;
+					if(Altarr2[i][2]==1&&!bestpawn.checkDangerPosition1(i)) humanscore5++;
 					else {
 						
 						AIscore1+=50;
@@ -949,7 +1213,7 @@ public class Minimax {
 		
 		System.out.println("how much gut i can eat team1 "+(num1-1)+"team2 "+(num2-1));
 		
-		num1*=5+20;
+		num1*=5+10;
 		num2*=5;
 			
 		return AIscore*num2-humanscore*(num1);
